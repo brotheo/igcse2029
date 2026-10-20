@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teacher copy — one hour, Python 2029</title>
+  <style>
+    :root { color-scheme: light; --ink: #1a1a1a; --muted: #5c5c5c; --line: #d8d8d8; --paper: #fff; --wash: #f4f4f4; --mark: #f3f7f3; --mark-line: #c9d7c9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 17px/1.5 Georgia, "Times New Roman", serif; color: var(--ink); background: var(--wash); }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font: 600 28px/1.2 system-ui, sans-serif; margin: 0 0 8px; }
+    h2 { font: 600 22px/1.25 system-ui, sans-serif; margin: 0 0 8px; }
+    h3 { font: 600 16px/1.3 system-ui, sans-serif; margin: 0 0 8px; }
+    p { margin: 0 0 12px; }
+    .lede, .say { color: var(--muted); }
+    .banner { font: 14px/1.4 system-ui, sans-serif; background: #1a1a1a; color: #fff; padding: 10px 12px; margin: 0 0 16px; }
+    .clock { width: 100%; border-collapse: collapse; background: var(--paper); margin: 16px 0 20px; font: 14px/1.4 system-ui, sans-serif; }
+    .clock th, .clock td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    .clock th { background: var(--wash); font-weight: 600; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px; }
+    nav a { font: 14px/1 system-ui, sans-serif; color: var(--ink); text-decoration: none; border: 1px solid var(--line); background: var(--paper); padding: 8px 10px; }
+    section { background: var(--paper); border: 1px solid var(--line); padding: 18px 16px 8px; margin: 0 0 18px; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+    pre { margin: 0 0 10px; padding: 12px; background: #f7f7f7; border: 1px solid var(--line); overflow-x: auto; font: 13px/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; }
+    .label { font: 600 12px/1.2 system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+    .scheme { background: var(--mark); border: 1px solid var(--mark-line); padding: 12px; margin: 8px 0 16px; }
+    .scheme h3 { margin-bottom: 6px; }
+    .marks { font: 600 13px/1 system-ui, sans-serif; }
+    ol { margin: 8px 0 0; padding-left: 1.2em; }
+    footer { margin-top: 12px; font: 13px/1.4 system-ui, sans-serif; }
+    footer a { color: inherit; }
+    @media (max-width: 720px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="banner">Teacher copy. Keep this on your laptop. The student page has the same questions and no answers.</p>
+    <h1>Take the class</h1>
+    <p class="lede">Say the grey line, show both columns on the student page, take the check, then let her write. Mark from this page after she has written, not before.</p>
+    <p><a href="student.html">Open the student page</a></p>
+
+    <table class="clock">
+      <thead><tr><th>Clock</th><th>You say</th><th>You do not reopen</th></tr></thead>
+      <tbody>
+        <tr><td>0–15</td><td>No DECLARE, no arrow, capitals, int()</td><td>What a variable is</td></tr>
+        <tr><td>15–27</td><td>print, input is text, cast before maths</td><td>Top to bottom</td></tr>
+        <tr><td>27–45</td><td>Colon, four spaces, elif not a second if</td><td>How a decision traces</td></tr>
+        <tr><td>45–57</td><td>Exact values, a shared branch with |, case _ last</td><td>Copying CASE OF word for word</td></tr>
+        <tr><td>57–60</td><td>She writes the gate on paper</td><td>A new topic</td></tr>
+      </tbody>
+    </table>
+
+    <nav>
+      <a href="#variables">1 Variables</a>
+      <a href="#sequence">2 Input</a>
+      <a href="#selection">3 if / elif</a>
+      <a href="#match">4 match</a>
+      <a href="#close">Close</a>
+    </nav>
+
+    <section id="variables">
+      <h2>1 · Variables · 15 min</h2>
+      <p class="say">Say: a name still stores a value. Python drops DECLARE and the arrow. A constant is ALL CAPITALS. The type is the value.</p>
+      <p><strong>Check answer:</strong> <code>TICKET_PRICE = 4.50</code>. Capitals, <code>=</code>, no type word.</p>
+
+      <article class="scheme">
+        <h3>Activity 1 · 5 marks</h3>
+        <p class="marks">One solution</p>
+        <pre># Fixed seat limit, then the facts that can change.
+MAX_SEATS = 40
+taken = 26
+price = 4.5
+gate_name = "North"
+open_now = True
+seats_left = MAX_SEATS - taken
+
+print(gate_name)
+print(seats_left)
+print(price)
+print(open_now)</pre>
+        <p>Output: North, then 14, then 4.5, then True.</p>
+        <ol>
+          <li><code>MAX_SEATS</code> is a constant in capitals.</li>
+          <li><code>taken</code> is an int and <code>price</code> is a float.</li>
+          <li><code>gate_name</code> is a string and <code>open_now</code> is a Boolean.</li>
+          <li><code>seats_left</code> uses the constant.</li>
+          <li>The four values are printed in that order.</li>
+        </ol>
+      </article>
+
+      <article class="scheme">
+        <h3>Activity 2 · 3 marks</h3>
+        <ol>
+          <li><code>MAX_DAYS</code> is the constant.</li>
+          <li>The name is written in capitals. Do not accept “because it does not change” on its own. The question asks for the way the name is written.</li>
+          <li><code>days_left</code> is an integer.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section id="sequence">
+      <h2>2 · Input, output, sequence · 12 min</h2>
+      <p class="say">Say: OUTPUT is print. INPUT is input, and it comes back as text. Cast, then calculate. Do not jump to the last print.</p>
+      <p><strong>Check answer:</strong> the text <code>"3"</code>. <code>int()</code> is the next line.</p>
+
+      <article class="scheme">
+        <h3>Activity 3 · 3 marks</h3>
+        <ol>
+          <li>First line of output is <code>33</code>.</li>
+          <li>Second line of output is <code>6</code>.</li>
+          <li>The first addition joins two strings. <code>int()</code> has not run yet, so it is not 3 + 3.</li>
+        </ol>
+      </article>
+
+      <article class="scheme">
+        <h3>Activity 4 · 4 marks</h3>
+        <pre>name = input("Name: ")
+party_text = input("Party size: ")
+party_size = int(party_text)
+print("Hello " + name)
+print(party_size)</pre>
+        <ol>
+          <li><code>input("Name: ")</code> stored in <code>name</code>.</li>
+          <li>Party size stored as text first.</li>
+          <li><code>int()</code> before the number is printed.</li>
+          <li>Hello is printed before the party size. The space is inside the quotes.</li>
+        </ol>
+        <p><code>party_size = int(input("Party size: "))</code> may take the text mark and the cast mark together if the prompt is right.</p>
+      </article>
+    </section>
+
+    <section id="selection">
+      <h2>3 · if, elif, else · 18 min</h2>
+      <p class="say">Say: same decision, new spelling. Colon, four spaces, highest band first. elif so only one message prints.</p>
+      <p><strong>Check answer:</strong> <code>elif</code>. A second <code>if</code> can also run.</p>
+
+      <article class="scheme">
+        <h3>Activity 5 · 4 marks</h3>
+        <pre>days_late = 6
+
+if days_late &gt;= 14:
+    band = "Replaced"
+elif days_late &gt;= 7:
+    band = "Week"
+elif days_late &gt;= 1:
+    band = "Small"
+else:
+    band = "None"
+
+print(band)</pre>
+        <p>With 6, the output is <code>Small</code>.</p>
+        <ol>
+          <li>Highest band first, <code>days_late &gt;= 14</code>.</li>
+          <li><code>elif</code> so only one band is chosen.</li>
+          <li>The 7 and 1 bands are both present.</li>
+          <li><code>else</code> is <code>"None"</code>, and only the band is printed.</li>
+        </ol>
+        <p>A second <code>if</code> for a later band does not get the elif mark. Nested IF / ENDIF is the pseudocode shape, not this answer.</p>
+      </article>
+
+      <article class="scheme">
+        <h3>Activity 6 · 3 marks</h3>
+        <ol>
+          <li>The printed line is <code>Resit</code>.</li>
+          <li><code>Pass</code> is not printed because 40 is not 50 or more, so the else runs.</li>
+          <li><code>Fail</code> is not printed because <code>resit</code> is <code>True</code>, so the inner else does not run.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section id="match">
+      <h2>4 · match-case · 12 min</h2>
+      <p class="say">Say: do not translate OTHERWISE and ENDCASE. Name the value once. Exact labels. The underscore is last. A range stays an if.</p>
+      <p><strong>Check answer:</strong> <code>case _:</code>. <code>case &gt;= "S"</code> is not a case label.</p>
+
+      <article class="scheme">
+        <h3>Activity 7 · 4 marks</h3>
+        <pre>night = "Q"
+
+match night:
+    case "Q":
+        print("Quiz")
+    case "D" | "K":
+        print("Sport")
+    case _:
+        print("Closed")</pre>
+        <p>Output: <code>Quiz</code>.</p>
+        <ol>
+          <li><code>match night</code>.</li>
+          <li><code>"Q"</code> on its own case.</li>
+          <li><code>"D"</code> and <code>"K"</code> joined with <code>|</code>.</li>
+          <li><code>case _</code> last.</li>
+        </ol>
+        <p>A chain of <code>if</code> does not answer this question. The question says to use <code>match</code>.</p>
+      </article>
+
+      <article class="scheme">
+        <h3>Activity 8 · 3 marks</h3>
+        <ol>
+          <li>Nothing is printed. <code>"X"</code> matches none of the three labels.</li>
+          <li>Add <code>case _:</code></li>
+          <li>It is last, after the <code>"L"</code> case, with <code>print("Ask at reception")</code> indented under it. Accept any clear leftover message if the wildcard is last.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section id="close">
+      <h2>Last three minutes · one mixed answer</h2>
+      <p class="say">She writes without looking up. Tick a mark only if that piece is in Python, not pseudocode.</p>
+      <article class="scheme">
+        <h3>One solution · 6 things to tick</h3>
+        <pre>TICKET_PRICE = 4.50
+party_text = input("Party size: ")
+party_size = int(party_text)
+total = party_size * TICKET_PRICE
+print(total)
+
+if total &gt;= 20:
+    print("Gate")
+else:
+    print("Desk")
+
+day_code = "S"
+match day_code:
+    case "S" | "L":
+        print("Sports hall")
+    case _:
+        print("Ask at reception")</pre>
+        <ol>
+          <li>Constant in capitals, stored with <code>=</code>.</li>
+          <li>Input cast with <code>int()</code> before the total.</li>
+          <li>Total printed after it is calculated.</li>
+          <li><code>if</code> / <code>else</code> for the 20 boundary, not <code>match</code>.</li>
+          <li><code>S</code> and <code>L</code> share a case with <code>|</code>.</li>
+          <li><code>case _</code> is last.</li>
+        </ol>
+      </article>
+    </section>
+
+    <footer>Student page: <a href="student.html">student.html</a>. Do not put this file on the shared screen.</footer>
+  </main>
+</body>
+</html>

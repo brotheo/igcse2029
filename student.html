@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>One hour — pseudocode to Python 2029</title>
+  <style>
+    :root { color-scheme: light; --ink: #1a1a1a; --muted: #5c5c5c; --line: #d8d8d8; --paper: #fff; --wash: #f4f4f4; --warn: #6b2d2d; --warn-bg: #f8f1f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 17px/1.5 Georgia, "Times New Roman", serif; color: var(--ink); background: var(--wash); }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font: 600 28px/1.2 system-ui, sans-serif; margin: 0 0 8px; }
+    h2 { font: 600 22px/1.25 system-ui, sans-serif; margin: 0 0 8px; }
+    h3 { font: 600 16px/1.3 system-ui, sans-serif; margin: 0 0 8px; }
+    p { margin: 0 0 12px; }
+    .lede { color: var(--muted); max-width: 68ch; }
+    .clock { width: 100%; border-collapse: collapse; background: var(--paper); margin: 16px 0 20px; font: 14px/1.4 system-ui, sans-serif; }
+    .clock th, .clock td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    .clock th { background: var(--wash); font-weight: 600; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 20px; }
+    nav a { font: 14px/1 system-ui, sans-serif; color: var(--ink); text-decoration: none; border: 1px solid var(--line); background: var(--paper); padding: 8px 10px; }
+    section { background: var(--paper); border: 1px solid var(--line); padding: 18px 16px 8px; margin: 0 0 18px; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+    pre { margin: 0; padding: 12px; background: #f7f7f7; border: 1px solid var(--line); overflow-x: auto; font: 13px/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; }
+    .label { font: 600 12px/1.2 system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+    .trap { background: var(--warn-bg); border: 1px solid #e4cccc; color: var(--warn); padding: 10px 12px; margin: 8px 0 14px; }
+    .check { font: 15px/1.4 system-ui, sans-serif; }
+    .check button { font: inherit; margin: 0 8px 8px 0; padding: 8px 10px; border: 1px solid var(--ink); background: var(--paper); cursor: pointer; }
+    .check button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .note { font: 15px/1.4 system-ui, sans-serif; margin-top: 8px; }
+    .activity { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 12px; }
+    textarea { width: 100%; min-height: 140px; font: 14px/1.45 ui-monospace, Consolas, monospace; padding: 10px; border: 1px solid var(--line); resize: vertical; }
+    .marks { font: 600 13px/1 system-ui, sans-serif; }
+    footer { margin-top: 12px; font: 13px/1.4 system-ui, sans-serif; color: var(--muted); }
+    @media (max-width: 720px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>One hour: pseudocode you know, Python you write</h1>
+    <p class="lede">Cambridge 0478 from March 2029. Python 3.10. One gate. The idea stays. The spelling changes. Write the exam questions on this page. Answers stay on the teacher copy.</p>
+
+    <table class="clock">
+      <thead><tr><th>Clock</th><th>Topic</th><th>Then solve</th></tr></thead>
+      <tbody>
+        <tr><td>0–15</td><td>Variables, constants, types, casting</td><td>2 questions, 8 marks</td></tr>
+        <tr><td>15–27</td><td>Input, output, sequence</td><td>2 questions, 7 marks</td></tr>
+        <tr><td>27–45</td><td>if, elif, else</td><td>2 questions, 7 marks</td></tr>
+        <tr><td>45–57</td><td>match-case</td><td>2 questions, 7 marks</td></tr>
+        <tr><td>57–60</td><td>Close on paper</td><td>One mixed gate program</td></tr>
+      </tbody>
+    </table>
+
+    <nav>
+      <a href="#variables">1 Variables</a>
+      <a href="#sequence">2 Input</a>
+      <a href="#selection">3 if / elif</a>
+      <a href="#match">4 match</a>
+      <a href="#close">Close</a>
+    </nav>
+
+    <section id="variables">
+      <h2>1 · Variables, constants, types, casting · 15 min</h2>
+      <p>A name still stores a value. Python drops <code>DECLARE</code> and the arrow. A constant is the same idea, written in ALL CAPITALS. The type is the value, not a line that announces <code>INTEGER</code>.</p>
+      <div class="pair">
+        <div><p class="label">Pseudocode you already wrote</p><pre>CONSTANT TicketPrice ← 4.50
+DECLARE seats : INTEGER
+seats ← 30
+DECLARE open : BOOLEAN
+open ← TRUE
+
+age ← INT(ageText)</pre></div>
+        <div><p class="label">Python 3.10 exam answer</p><pre>TICKET_PRICE = 4.50
+seats = 30
+open = True
+
+age = int(age_text)</pre></div>
+      </div>
+      <p class="trap">No DECLARE, no arrow, no INTEGER or BOOLEAN. True and False start with a capital. Cast with int(), float() or str(). A constant is ALL CAPITALS, not the word CONSTANT.</p>
+      <div class="check" data-answer="a">
+        <h3>Check · Which line is a 2029 constant?</h3>
+        <button type="button" data-choice="a">TICKET_PRICE = 4.50</button>
+        <button type="button" data-choice="b">CONSTANT TicketPrice ← 4.50</button>
+        <button type="button" data-choice="c">DECLARE price : REAL</button>
+        <p class="note" hidden></p>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 1 · 5 marks</p>
+        <p>A gate keeps one fixed limit and four facts that can change. Write this in Python. Every line starts at the left edge.</p>
+        <ul>
+          <li><code>MAX_SEATS</code> is the constant <code>40</code></li>
+          <li><code>taken</code> is the integer <code>26</code></li>
+          <li><code>price</code> is the float <code>4.5</code></li>
+          <li><code>gate_name</code> is the string <code>"North"</code></li>
+          <li><code>open_now</code> is the Boolean <code>True</code></li>
+          <li><code>seats_left</code> is <code>MAX_SEATS - taken</code></li>
+        </ul>
+        <p>Print <code>gate_name</code>, then <code>seats_left</code>, then <code>price</code>, then <code>open_now</code>, each on its own line.</p>
+        <textarea data-key="q1" placeholder="Write the Python here"></textarea>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 2 · 3 marks</p>
+        <p>A program contains these two lines.</p>
+        <pre>MAX_DAYS = 14
+days_left = 5</pre>
+        <p>State which name is the constant, and state one reason that uses the way the name is written. Then state the type of <code>days_left</code>.</p>
+        <textarea data-key="q2" placeholder="Write the answer here"></textarea>
+      </div>
+    </section>
+
+    <section id="sequence">
+      <h2>2 · Input, output and sequence · 12 min</h2>
+      <p><code>OUTPUT</code> becomes <code>print</code>. <code>INPUT</code> becomes <code>input</code>, and it always comes back as text, even when the digits look like a number. Cast on the next line, then calculate. The lines still run once, from top to bottom.</p>
+      <div class="pair">
+        <div><p class="label">Pseudocode</p><pre>OUTPUT "Gate opens"
+INPUT name
+OUTPUT "Hello ", name
+INPUT partyText
+partySize ← INT(partyText)
+OUTPUT partySize + partySize</pre></div>
+        <div><p class="label">Python 3.10</p><pre>print("Gate opens")
+name = input("Name: ")
+print("Hello " + name)
+party_text = input("Party size: ")
+party_size = int(party_text)
+print(party_size + party_size)</pre></div>
+      </div>
+      <p class="trap">If the input is added before int(), "3" + "3" is the text 33, not 6. Print the result after the calculation, not before.</p>
+      <div class="check" data-answer="a">
+        <h3>Check · She types 3 at Party size. What is stored before int()?</h3>
+        <button type="button" data-choice="a">The text "3"</button>
+        <button type="button" data-choice="b">The integer 3</button>
+        <button type="button" data-choice="c">The real 3.0</button>
+        <p class="note" hidden></p>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 3 · 3 marks</p>
+        <p>State both lines of output from this program. State why the first line is not 6.</p>
+        <pre>party_text = "3"
+print(party_text + party_text)
+party_size = int(party_text)
+print(party_size + party_size)</pre>
+        <textarea data-key="q3" placeholder="Both lines, and the reason"></textarea>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 4 · 4 marks</p>
+        <p>Write a program that runs from top to bottom.</p>
+        <ul>
+          <li>Read a name with <code>input("Name: ")</code> and store it in <code>name</code></li>
+          <li>Read a party size with <code>input("Party size: ")</code> and store the text in <code>party_text</code></li>
+          <li>Cast that text to an integer in <code>party_size</code></li>
+          <li>Print <code>"Hello " + name</code>, then print <code>party_size</code></li>
+        </ul>
+        <textarea data-key="q4" placeholder="Write the Python here"></textarea>
+      </div>
+    </section>
+
+    <section id="selection">
+      <h2>3 · Selection: if, elif, else · 18 min</h2>
+      <p>The decision is the one you can already trace. Python uses a colon and four spaces instead of <code>THEN</code> and <code>ENDIF</code>. When only one band should run, the later tests are <code>elif</code>, not a new <code>if</code>.</p>
+      <div class="pair">
+        <div><p class="label">Pseudocode</p><pre>IF mark &gt;= 80 THEN
+    OUTPUT "A"
+ELSE
+    IF mark &gt;= 50 THEN
+        OUTPUT "P"
+    ELSE
+        OUTPUT "U"
+    ENDIF
+ENDIF</pre></div>
+        <div><p class="label">Python 3.10</p><pre>if mark &gt;= 80:
+    print("A")
+elif mark &gt;= 50:
+    print("P")
+else:
+    print("U")</pre></div>
+      </div>
+      <p class="trap">A second if starts a new test, so two messages can print. elif means only one band. Check the highest band first. No THEN, no ENDIF.</p>
+      <div class="check" data-answer="a">
+        <h3>Check · Only one grade should print. Which word joins the next band?</h3>
+        <button type="button" data-choice="a">elif</button>
+        <button type="button" data-choice="b">a second if</button>
+        <button type="button" data-choice="c">ENDIF</button>
+        <p class="note" hidden></p>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 5 · 4 marks</p>
+        <p>A library sets a fine band from the number of days a book is late. Store the days in <code>days_late</code>. Use 6 as the test value.</p>
+        <ul>
+          <li>14 or more: <code>"Replaced"</code></li>
+          <li>7 to 13: <code>"Week"</code></li>
+          <li>1 to 6: <code>"Small"</code></li>
+          <li>0: <code>"None"</code></li>
+        </ul>
+        <p>Print the band only. Use one <code>if</code> / <code>elif</code> / <code>else</code> chain, highest band first.</p>
+        <textarea data-key="q5" placeholder="Write the Python here"></textarea>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 6 · 3 marks</p>
+        <p><code>score</code> is 40 and <code>resit</code> is <code>True</code>. State the one line that is printed, and state why the other two are not.</p>
+        <pre>score = 40
+resit = True
+
+if score &gt;= 50:
+    print("Pass")
+else:
+    if resit == True:
+        print("Resit")
+    else:
+        print("Fail")</pre>
+        <textarea data-key="q6" placeholder="The printed line, and why"></textarea>
+      </div>
+    </section>
+
+    <section id="match">
+      <h2>4 · Selection: match-case · 12 min</h2>
+      <p>This is the new piece. <code>match</code> is not <code>CASE OF</code> copied across. Name the value once. Each case is an exact value. <code>case _</code> is the leftover, and it is last. A range such as 80 or more stays an <code>if</code>.</p>
+      <div class="pair">
+        <div><p class="label">Older CASE shape</p><pre>CASE OF day_code
+    "M" : OUTPUT "Museum"
+    "S" : OUTPUT "Sports hall"
+    OTHERWISE OUTPUT "Ask at reception"
+ENDCASE</pre></div>
+        <div><p class="label">Python 3.10</p><pre>match day_code:
+    case "M":
+        print("Museum")
+    case "S" | "L":
+        print("Sports hall")
+    case _:
+        print("Ask at reception")</pre></div>
+      </div>
+      <p class="trap">case _ is not OTHERWISE and not default. String labels need quotes. The | shares one branch. case &gt;= 50 is not a case label.</p>
+      <div class="check" data-answer="a">
+        <h3>Check · The code is not M, S or L. Which line must be last?</h3>
+        <button type="button" data-choice="a">case _:</button>
+        <button type="button" data-choice="b">OTHERWISE</button>
+        <button type="button" data-choice="c">case &gt;= "S":</button>
+        <p class="note" hidden></p>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 7 · 4 marks</p>
+        <p>Write this in Python. <code>night</code> holds <code>"Q"</code>. Use <code>match</code>. Do not use a chain of <code>if</code>.</p>
+        <ul>
+          <li><code>"Q"</code> prints <code>Quiz</code></li>
+          <li><code>"D"</code> or <code>"K"</code> prints <code>Sport</code></li>
+          <li>anything else prints <code>Closed</code></li>
+        </ul>
+        <textarea data-key="q7" placeholder="Write the match here"></textarea>
+      </div>
+      <div class="activity">
+        <p class="marks">Activity 8 · 3 marks</p>
+        <p><code>day_code</code> is <code>"X"</code>. State what this program prints. Then write the one line that must be added, and state where it goes.</p>
+        <pre>day_code = "X"
+
+match day_code:
+    case "M":
+        print("Museum")
+    case "S":
+        print("Sports hall")
+    case "L":
+        print("Library")</pre>
+        <textarea data-key="q8" placeholder="What prints, and the missing line"></textarea>
+      </div>
+    </section>
+
+    <section id="close">
+      <h2>Last three minutes</h2>
+      <p>Write this on paper, in Python, without looking up. <code>TICKET_PRICE</code> is the constant <code>4.50</code>. Read a party size, cast it, and print the total. If the total is 20 or more, print <code>Gate</code>. Otherwise print <code>Desk</code>. A day code of <code>S</code> or <code>L</code> prints <code>Sports hall</code>. Any other code prints <code>Ask at reception</code>, using <code>match</code>.</p>
+      <textarea data-key="close" placeholder="The mixed program"></textarea>
+    </section>
+
+    <footer>Loops, lists and functions are not in this hour. Your writing stays in this browser.</footer>
+  </main>
+  <script>
+    const why = {
+      variables: "The name is capitals, the value is stored with =, and there is no type word.",
+      sequence: "input() returns a string. int() is the next line, and that is the line that makes 3 + 3 equal 6.",
+      selection: "elif continues the same decision. A second if is a new decision and can also run.",
+      match: "The underscore catches whatever is left. A comparison is not a case label."
+    };
+    document.querySelectorAll(".check").forEach((box) => {
+      const answer = box.dataset.answer;
+      const note = box.querySelector(".note");
+      const topic = box.closest("section").id;
+      box.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          box.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", "false"));
+          button.setAttribute("aria-pressed", "true");
+          const right = button.dataset.choice === answer;
+          note.hidden = false;
+          note.textContent = (right ? "Yes. " : "Not that one. ") + why[topic];
+        });
+      });
+    });
+    document.querySelectorAll("textarea").forEach((area) => {
+      const key = "igcse-hour-" + area.dataset.key;
+      const saved = localStorage.getItem(key);
+      if (saved) area.value = saved;
+      area.addEventListener("input", () => localStorage.setItem(key, area.value));
+    });
+  </script>
+</body>
+</html>
