@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operators &amp; Selection Lab — Teacher</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --ink:#1d2433; --muted:#5b6475; --line:#dfe3ec;
+    --brand:#0f7b6c; --brand-soft:#e2f4f0; --warn:#c2410c; --warn-soft:#fff1e8;
+    --code-bg:#1e2230; --code-ink:#e8ecf4; --ext:#5b4bdb; --ext-soft:#ece9ff;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12141b; --card:#1b1e28; --ink:#e7eaf2; --muted:#9aa3b5; --line:#2c3140;
+      --brand:#3cc9b0; --brand-soft:#173430; --warn:#ff9a62; --warn-soft:#3a2418;
+      --code-bg:#0d0f15; --ext:#9d93ff; --ext-soft:#262246; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+  header.hero{background:linear-gradient(135deg,#0f7b6c,#1e5fa8);color:#fff;border-radius:18px;padding:28px 24px;margin-bottom:24px}
+  .brand{font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:13px;opacity:.9}
+  .hero h1{margin:6px 0 4px;font-size:30px;line-height:1.2}
+  .hero p{margin:0;opacity:.92}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .pill{background:rgba(255,255,255,.18);padding:6px 12px;border-radius:999px;font-size:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+  h2{margin:0 0 4px;font-size:22px}
+  h3{margin:20px 0 6px;font-size:17px}
+  h4{margin:14px 0 4px;font-size:15px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .marks{background:var(--brand-soft);color:var(--brand);font-weight:700;padding:4px 10px;border-radius:8px;font-size:14px;white-space:nowrap}
+  .qm{float:right;color:var(--brand);font-weight:700;font-size:14px}
+  pre{background:var(--code-bg);color:var(--code-ink);padding:14px 16px;border-radius:10px;overflow-x:auto;font:14px/1.55 Consolas,"Fira Code",monospace;margin:10px 0}
+  code{font-family:Consolas,"Fira Code",monospace;font-size:.92em;background:var(--brand-soft);padding:1px 5px;border-radius:5px}
+  pre code{background:none;padding:0;font-size:inherit}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--brand-soft)}
+  ul.ms{margin:6px 0;padding-left:20px}
+  ul.ms li{margin:3px 0}
+  .box{border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0}
+  .box.mis{border-left:4px solid var(--warn);background:var(--warn-soft)}
+  .box.ext{border-left:4px solid var(--ext);background:var(--ext-soft)}
+  .box.tip{border-left:4px solid var(--brand);background:var(--brand-soft)}
+  .box strong.lbl{display:block;margin-bottom:4px}
+  .box ul{margin:4px 0 0;padding-left:20px}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .part{background:linear-gradient(135deg,#1e5fa8,#0f7b6c);color:#fff;border-radius:14px;padding:18px 20px;margin:32px 0 20px}
+  .part h2{margin:0}
+  .part p{margin:4px 0 0;opacity:.92}
+  @media print{ body{background:#fff} .card{break-inside:avoid} }
+  @media (max-width:560px){ .hero h1{font-size:24px} table{font-size:13px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="brand">SparkMind Coding · Teacher edition</div>
+  <h1>Operators &amp; Selection Challenge Lab — Answers &amp; Mark Scheme</h1>
+  <p>Cambridge IGCSE Computer Science 0265 / 0478 · 2029 syllabus · Python 3.10</p>
+  <div class="meta">
+    <span class="pill">⏱ Part A · 60 min</span>
+    <span class="pill">🔀 Part B · 35 min</span>
+    <span class="pill">40 + 12 + 18 marks</span>
+    <span class="pill">🔒 Do not share with students</span>
+  </div>
+</header>
+
+<section class="card">
+  <h2>Lesson overview</h2>
+  <p><strong>Progression:</strong> the operators lesson taught the seven arithmetic operators, the six relational operators and <code>and</code>/<code>or</code>/<code>not</code> through the ferry and bakery examples. This lab is the harder follow-up: no re-teaching, more marks for <em>choosing</em> the right operator, precedence, brackets in logic, and printing lines in the required order.</p>
+  <p><strong>Scope:</strong> <strong>Part A</strong> (Challenges 1–7) uses variables, constants, operators and <code>print()</code> only — Booleans are printed directly. <strong>Part B</strong> (Challenges 8–9) links back to the lessons <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em>, using the operators inside conditions. No loops, lists or functions anywhere. Accept any correct answer in scope.</p>
+  <p><strong>New on the student page:</strong> a fold-out hint under the hardest questions (2c, 3c, 5, 6c, 7, 8c, 9b) and a self-score table that adds up automatically. Ask students to note which hints they opened — it shows you where support is still needed.</p>
+  <div class="tw"><table>
+    <tr><th>Time</th><th>Challenge</th><th>Marks</th><th>Teacher focus</th></tr>
+    <tr><td>0–10</td><td>1 · Predict output</td><td>7</td><td>No running code. Check <code>5</code> vs <code>5.0</code> carefully.</td></tr>
+    <tr><td>10–18</td><td>2 · Choose the operator</td><td>6</td><td>Ask: "Which word in the question tells you the operator?"</td></tr>
+    <tr><td>18–30</td><td>3 · Relational &amp; logical</td><td>9</td><td>3(c) is the key teaching moment — <code>and</code> before <code>or</code>.</td></tr>
+    <tr><td>30–40</td><td>4 · Debugging</td><td>8</td><td>Students must spot the <em>print-order</em> error, not just syntax.</td></tr>
+    <tr><td>40–57</td><td>5 · Integrated</td><td>10</td><td>Circulate; ask questions, don't fix code.</td></tr>
+    <tr><td>57–60</td><td>Review</td><td>—</td><td>Students run the checklist on their own code.</td></tr>
+    <tr><td>Extra</td><td>6 · Digits · 7 · Change machine</td><td>+12</td><td>Fast finishers or homework. Not counted in the 40.</td></tr>
+    <tr><td>B · 0–10</td><td>Worked examples</td><td>—</td><td>Students predict each output <em>before</em> reading it.</td></tr>
+    <tr><td>B · 10–22</td><td>8 · Selection</td><td>10</td><td>Unreachable branches and nested indentation.</td></tr>
+    <tr><td>B · 22–35</td><td>9 · <code>match-case</code></td><td>8</td><td>String vs integer cases; no total after an invalid ticket.</td></tr>
+  </table></div>
+  <div class="box tip"><strong class="lbl">Grade guide (out of 40)</strong>
+    34+ secure · 26–33 developing well · 18–25 needs targeted practice · below 18 revisit the operators lesson before moving on.
+  </div>
+</section>
+
+<div class="part"><h2>Part A · Operators</h2><p>Challenges 1–5 · 60 minutes · 40 marks</p></div>
+
+<!-- CHALLENGE 1 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 1 · Predict the output</h2><span class="marks">7 marks</span></div>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Statement</th><th>Output</th><th>Note</th></tr>
+    <tr><td>a</td><td><code>23 / 4</code></td><td><code>5.75</code></td><td>float division</td></tr>
+    <tr><td>b</td><td><code>23 // 4</code></td><td><code>5</code></td><td>whole groups</td></tr>
+    <tr><td>c</td><td><code>23 % 4</code></td><td><code>3</code></td><td>remainder</td></tr>
+    <tr><td>d</td><td><code>3 ** 2</code></td><td><code>9</code></td><td>power</td></tr>
+    <tr><td>e</td><td><code>2 + 3 * 4</code></td><td><code>14</code></td><td><code>*</code> before <code>+</code></td></tr>
+    <tr><td>f</td><td><code>(2 + 3) * 4</code></td><td><code>20</code></td><td>brackets first</td></tr>
+    <tr><td>g</td><td><code>10 - 4 // 3 ** 2</code></td><td><code>10</code></td><td><code>3 ** 2</code> = 9 → <code>4 // 9</code> = 0 → <code>10 - 0</code> = 10</td></tr>
+  </table></div>
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>1 mark per correct output (7). <code>5.0</code> for (b) or <code>9.0</code> for (d) earns 0.</li>
+    <li>Working for (g) is not marked separately, but use it to diagnose precedence errors.</li>
+  </ul>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>(g) worked left to right: <code>10 - 4</code> = 6 → <code>6 // 3</code> = 2 → <code>2 ** 2</code> = 4.</li>
+      <li>(g) <code>4 // 9</code> given as <code>0.44</code> — <code>//</code> drops the fraction.</li>
+      <li>Reading <code>%</code> as a percentage.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension</strong>
+    Predict <code>2 ** 3 ** 2</code> (answer <code>512</code> — <code>**</code> works right to left) and <code>-7 // 2</code> (answer <code>-4</code> — floor division rounds down, not towards zero).
+  </div>
+</section>
+
+<!-- CHALLENGE 2 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 2 · Choose the operator</h2><span class="marks">6 marks</span></div>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Model line</th><th>Output</th></tr>
+    <tr><td>a</td><td><code>print(students // SEATS)</code></td><td><code>8</code></td></tr>
+    <tr><td>b</td><td><code>print(students % SEATS)</code></td><td><code>13</code></td></tr>
+    <tr><td>c</td><td><code>print((students + SEATS - 1) // SEATS)</code></td><td><code>9</code></td></tr>
+    <tr><td>d</td><td><code>print(3000 / students)</code></td><td><code>24.0</code></td></tr>
+    <tr><td>e</td><td><code>print(7 ** 2)</code></td><td><code>49</code></td></tr>
+  </table></div>
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>(a) 1 mark: <code>//</code> with correct output.</li>
+    <li>(b) 1 mark: <code>%</code> with correct output.</li>
+    <li>(c) 1 mark: an operator-only method that gives 9; 1 mark: it would also work for a number that divides exactly (e.g. 126 → 9, not 10). <br>Also accept <code>students // SEATS + (students % SEATS + SEATS - 1) // SEATS</code> or <code>-(-students // SEATS)</code>.</li>
+    <li>(d) 1 mark: <code>/</code>; output <code>24.0</code>. Using <code>//</code> earns 0 — money can be a decimal.</li>
+    <li>(e) 1 mark: <code>**</code>. <code>7 * 7</code> earns 0 — the question asked for a power.</li>
+  </ul>
+  <div class="box tip"><strong class="lbl">Teaching note for (c)</strong>
+    <code>students // SEATS + 1</code> gives 9 here but is wrong when the division is exact (126 students → 10 buses). Test it with 126 live in front of the class.
+  </div>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>(d) writing <code>24</code> instead of <code>24.0</code> — <code>/</code> always gives a float.</li>
+      <li>Typing <code>14</code> in the lines instead of using the constant <code>SEATS</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 3 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 3 · Relational and logical operators</h2><span class="marks">9 marks</span></div>
+
+  <h3>3(a) <span class="qm">[4]</span></h3>
+  <div class="tw"><table>
+    <tr><th>Expression (<code>age = 15</code>, <code>member = False</code>, <code>bags = 3</code>)</th><th>Result</th><th>Why</th></tr>
+    <tr><td><code>age &gt;= 12 and bags &lt;= 2</code></td><td><code>False</code></td><td>right side False, <code>and</code> needs both</td></tr>
+    <tr><td><code>age &lt; 12 or not member</code></td><td><code>True</code></td><td><code>not False</code> is True</td></tr>
+    <tr><td><code>not (age == 15)</code></td><td><code>False</code></td><td><code>not True</code></td></tr>
+    <tr><td><code>bags % 2 == 1 and age != 16</code></td><td><code>True</code></td><td><code>3 % 2</code> is 1; 15 ≠ 16</td></tr>
+  </table></div>
+  <ul class="ms"><li>1 mark per correct result. <code>true</code>/<code>false</code> in lower case: accept but correct it.</li></ul>
+
+  <h3>3(b) <span class="qm">[3]</span></h3>
+<pre><code>child_fare = age &lt; 12
+can_board = age &gt;= 16 and (member or has_ticket)
+is_even = n % 2 == 0</code></pre>
+  <ul class="ms">
+    <li>1 mark each. <code>can_board</code> must have the brackets around the <code>or</code>.</li>
+    <li>Accept <code>12 &gt; age</code>, <code>not n % 2 == 1</code> and <code>(age &gt;= 16 and member) or (age &gt;= 16 and has_ticket)</code>.</li>
+  </ul>
+
+  <h3>3(c) <span class="qm">[2]</span></h3>
+  <p>Output: <code>True</code>. Python does <code>and</code> before <code>or</code>, so it reads it as <code>(age &gt;= 16 and member) or has_ticket</code> → <code>False or True</code> → <code>True</code>. A 10-year-old with a ticket is wrongly allowed to board.</p>
+<pre><code>print(age &gt;= 16 and (member or has_ticket))</code></pre>
+  <p>Corrected output: <code>False</code>.</p>
+  <ul class="ms">
+    <li>1 mark: output <code>True</code> with the reason (<code>and</code> is evaluated before <code>or</code>).</li>
+    <li>1 mark: corrected line with brackets around <code>member or has_ticket</code>.</li>
+  </ul>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Thinking Python reads logic strictly left to right.</li>
+      <li>Students who write the long form <code>age &gt;= 16 and member or age &gt;= 16 and has_ticket</code> are correct — accept it, but show that brackets are clearer.</li>
+      <li>Writing <code>is_even = n % 2 = 0</code> (assignment inside a test).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 4 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 4 · Debug the ferry report</h2><span class="marks">8 marks</span></div>
+
+  <h3>4(a) <span class="qm">[5]</span></h3>
+  <div class="tw"><table>
+    <tr><th>Line(s)</th><th>Error</th><th>Correction</th><th>Type</th></tr>
+    <tr><td>4</td><td><code>/</code> gives 4.6 — question asks for whole boats</td><td><code>boats = people // SEATS</code></td><td>Logic</td></tr>
+    <tr><td>8–9</td><td>Lines 1 and 2 printed in the wrong order</td><td><code>print(boats)</code> then <code>print(left)</code></td><td>Logic</td></tr>
+    <tr><td>11</td><td><code>^</code> is not a power in Python (it is bitwise XOR — prints 6)</td><td><code>area = 4 ** 2</code></td><td>Logic</td></tr>
+    <tr><td>13</td><td><code>&amp;&amp;</code> is not a Python operator</td><td><code>and</code></td><td>Syntax</td></tr>
+    <tr><td>13</td><td><code>=</code> stores, it does not compare</td><td><code>left == 0</code></td><td>Syntax</td></tr>
+  </table></div>
+<pre><code># Ferry report
+SEATS = 5
+people = 23
+boats = people // SEATS
+left = people % SEATS
+FARE = 12.5
+total = people * FARE
+print(boats)
+print(left)
+print(total)
+area = 4 ** 2
+print(area)
+can_sail = boats &gt; 0 and left == 0
+print(can_sail)</code></pre>
+  <ul class="ms"><li>1 mark per error identified <strong>and</strong> corrected (max 5).</li></ul>
+
+  <h3>4(b) <span class="qm">[3]</span></h3>
+<pre><code>4
+3
+287.5
+16
+False</code></pre>
+  <ul class="ms">
+    <li>1 mark: <code>4</code> then <code>3</code>, in that order.</li>
+    <li>1 mark: <code>287.5</code> and <code>16</code>.</li>
+    <li>1 mark: <code>False</code> (3 people are left over).</li>
+  </ul>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Finding the three "visible" errors and missing the swapped print order.</li>
+      <li>Thinking <code>4 ^ 2</code> causes an error. It runs and prints <code>6</code> — that's why it is dangerous.</li>
+      <li>Writing <code>16.0</code> for the area.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 5 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 5 · Integrated challenge: the ferry office</h2><span class="marks">10 marks</span></div>
+
+  <h3>Model answer (Python 3.10)</h3>
+<pre><code># Ferry office
+SEATS = 12
+FARE = 35
+CHARTER = 2000
+MIN_AGE = 16
+
+queue = 50
+age = 15
+has_ticket = True
+with_adult = True
+
+full_boats = queue // SEATS
+left = queue % SEATS
+boats_needed = (queue + SEATS - 1) // SEATS
+
+print(full_boats)
+print(left)
+print(boats_needed)
+print(queue * FARE)
+print(CHARTER / queue)
+print(left &gt;= SEATS / 2 or left == 0)
+print(has_ticket and (age &gt;= MIN_AGE or with_adult))</code></pre>
+
+  <h3>Expected outputs (all tested)</h3>
+  <div class="tw"><table>
+    <tr><th>queue, age, ticket, adult</th><th>Seven lines</th></tr>
+    <tr><td>50, 15, True, True</td><td><code>4 · 2 · 5 · 1750 · 40.0 · False · True</code></td></tr>
+    <tr><td>47, 15, True, False</td><td><code>3 · 11 · 4 · 1645 · 42.5531914893617 · True · False</code></td></tr>
+    <tr><td>36, 17, False, False</td><td><code>3 · 0 · 3 · 1260 · 55.55555555555556 · True · False</code></td></tr>
+    <tr><td>24, 17, True, False</td><td><code>2 · 0 · 2 · 840 · 83.33333333333333 · True · True</code></td></tr>
+  </table></div>
+  <p><strong>Boundary test answer:</strong> a queue where <code>queue % 12</code> is exactly 6 — e.g. <code>queue = 30</code>, <code>42</code> or <code>54</code>. Line 6 is <code>True</code> because <code>6 &gt;= 6.0</code>. Students who wrote <code>&gt;</code> instead of <code>&gt;=</code> get <code>False</code> here — that's what the test is designed to catch.</p>
+
+  <h4>Mark scheme</h4>
+  <div class="tw"><table>
+    <tr><th>Criterion</th><th>Marks</th></tr>
+    <tr><td>Four constants in ALL CAPITALS, used in the calculations (no retyped numbers)</td><td>1</td></tr>
+    <tr><td>Line 1 uses <code>//</code></td><td>1</td></tr>
+    <tr><td>Line 2 uses <code>%</code></td><td>1</td></tr>
+    <tr><td>Line 3: operator-only method that works for exact and non-exact queues</td><td>2</td></tr>
+    <tr><td>Lines 4–5: <code>*</code> for total fare and <code>/</code> for the shared charter</td><td>1</td></tr>
+    <tr><td>Line 6: <code>&gt;=</code> half a boat, <code>or</code> leftover <code>== 0</code></td><td>2</td></tr>
+    <tr><td>Line 7: <code>and</code> with brackets around the <code>or</code></td><td>1</td></tr>
+    <tr><td>All seven lines printed in the required order</td><td>1</td></tr>
+    <tr><th>Total</th><th>10</th></tr>
+  </table></div>
+  <p>Accept <code>SEATS // 2</code> instead of <code>SEATS / 2</code> on line 6 (both work for 12 seats). Accept the order <code>(age &gt;= MIN_AGE or with_adult) and has_ticket</code> on line 7.</p>
+
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Line 3 as <code>full_boats + 1</code> — fails for queue 36 (gives 4, should be 3).</li>
+      <li>Line 5 with <code>//</code> — the charter share loses its decimal part.</li>
+      <li>Line 6 with <code>&gt;</code> — fails the boundary test.</li>
+      <li>Line 7 without brackets: <code>has_ticket and age &gt;= MIN_AGE or with_adult</code> — a passenger with no ticket but with an adult is allowed on.</li>
+      <li>Writing <code>&amp;&amp;</code> / <code>||</code>, or <code>true</code> in lower case.</li>
+    </ul>
+  </div>
+
+  <div class="box ext"><strong class="lbl">Extension questions (operators only)</strong>
+    <ul>
+      <li>Print the number of empty seats on the last boat: <code>(SEATS - queue % SEATS) % SEATS</code>. Why is the final <code>% SEATS</code> needed? (So an exact queue gives 0, not 12.)</li>
+      <li>Change the queue and passenger values to come from <code>input()</code>. Which values need <code>int()</code>, and how can you turn <code>"Y"</code>/<code>"N"</code> into a Boolean? (<code>has_ticket = input("Ticket? ") == "Y"</code>)</li>
+      <li>Print <code>True</code> if the queue fills an even number of boats: <code>full_boats % 2 == 0</code>.</li>
+      <li>Explain, in one sentence each, when an exam answer should use <code>/</code>, <code>//</code> and <code>%</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 6 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 6 · Split a number into digits (extra)</h2><span class="marks">6 marks</span></div>
+
+  <h3>6(a) <span class="qm">[4]</span></h3>
+  <div class="tw"><table>
+    <tr><th>thousands</th><th>hundreds</th><th>tens</th><th>units</th><th>digit_sum</th><th>Output</th></tr>
+    <tr><td>4</td><td>7</td><td>2</td><td>9</td><td>22</td><td><code>22</code><br><code>False</code></td></tr>
+  </table></div>
+  <ul class="ms">
+    <li>1 mark: <code>thousands</code> 4 and <code>units</code> 9.</li>
+    <li>1 mark: <code>hundreds</code> 7 and <code>tens</code> 2.</li>
+    <li>1 mark: <code>digit_sum</code> 22.</li>
+    <li>1 mark: outputs <code>22</code> and <code>False</code> (22 % 3 is 1).</li>
+  </ul>
+
+  <h3>6(b) <span class="qm">[1]</span></h3>
+  <p><code>9</code> then <code>False</code>. 9 is divisible by 3, but <code>units</code> is 0, so <code>units != 0</code> is <code>False</code> and the whole <code>and</code> is <code>False</code>.</p>
+  <ul class="ms"><li>1 mark: both lines correct.</li></ul>
+
+  <h3>6(c) <span class="qm">[1]</span></h3>
+  <p><code>4729 // 100</code> gives <code>47</code> — it removes the last two digits but keeps the thousands. <code>% 10</code> then keeps only the last digit of 47, which is <code>7</code>.</p>
+  <ul class="ms"><li>1 mark: states <code>// 100</code> alone gives 47 and <code>% 10</code> keeps the last digit.</li></ul>
+
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Writing <code>hundreds</code> as 47 — forgetting the <code>% 10</code>.</li>
+      <li>Thinking <code>% 10</code> runs before <code>// 100</code>. They have the same precedence, so Python works left to right.</li>
+      <li>6(b): giving <code>True</code> because 9 is divisible by 3, and ignoring the <code>and units != 0</code>.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension</strong>
+    Print the number backwards using only operators: <code>units * 1000 + tens * 100 + hundreds * 10 + thousands</code> → <code>9274</code>.
+  </div>
+</section>
+
+<!-- CHALLENGE 7 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 7 · The change machine (extra)</h2><span class="marks">6 marks</span></div>
+
+  <h3>Model answer</h3>
+<pre><code># Change machine
+change = 87
+
+fifties = change // 50
+rest = change % 50
+twenties = rest // 20
+rest = rest % 20
+tens = rest // 10
+rest = rest % 10
+fives = rest // 5
+ones = rest % 5
+
+print(fifties)
+print(twenties)
+print(tens)
+print(fives)
+print(ones)
+print(tens + fives + ones &gt; 0)</code></pre>
+
+  <h3>Expected outputs (all tested)</h3>
+  <div class="tw"><table>
+    <tr><th>change</th><th>Six lines</th></tr>
+    <tr><td>87</td><td><code>1 · 1 · 1 · 1 · 2 · True</code></td></tr>
+    <tr><td>199</td><td><code>3 · 2 · 0 · 1 · 4 · True</code></td></tr>
+    <tr><td>50</td><td><code>1 · 0 · 0 · 0 · 0 · False</code></td></tr>
+    <tr><td>4</td><td><code>0 · 0 · 0 · 0 · 4 · True</code></td></tr>
+    <tr><td>60 <em>(student prediction)</em></td><td><code>1 · 0 · 1 · 0 · 0 · True</code></td></tr>
+  </table></div>
+
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>1 mark: 50s with <code>change // 50</code>.</li>
+    <li>1 mark: remainder found with <code>%</code> and reused for the next step.</li>
+    <li>2 marks: 20s, 10s and 5s all correct (1 mark if one step is wrong).</li>
+    <li>1 mark: 1s as the final remainder.</li>
+    <li>1 mark: Boolean line correct and all six lines in order.</li>
+  </ul>
+  <p>Accept <code>ones = rest % 5</code> or <code>rest = rest % 5</code> then <code>ones = rest</code>. Accept <code>tens &gt; 0 or fives &gt; 0 or ones &gt; 0</code> for line 6.</p>
+
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Using <code>change</code> every time (<code>change // 20</code>) instead of what is left — 87 then gives 4 twenties.</li>
+      <li>Using <code>/</code> and getting <code>1.74</code> notes.</li>
+      <li>Predicting <code>0 · 3 · 0 · 0 · 0</code> for 60 (three 20s). The rule is biggest value first, so it is one 50 and one 10.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension</strong>
+    Add 2 baht coins between the 5s and 1s, and print the total number of pieces of money given. For 87 the answer is 5 pieces (50, 20, 10, 5, 2 — no 1s needed).
+  </div>
+</section>
+
+<div class="part"><h2>Part B · Selection with operators</h2><p>35 minutes · 18 marks · next lesson or homework</p></div>
+
+<section class="card">
+  <h2>Teaching the worked examples</h2>
+  <p>Show each example with the output covered. Students say the output aloud, then reveal it. Spend most of the time on these questions:</p>
+  <div class="tw"><table>
+    <tr><th>Example</th><th>Ask</th><th>Answer</th></tr>
+    <tr><td>1 · Fares</td><td>Ages 3 and 17 are both under 18. Why does 3 get <code>0</code>, not <code>20</code>?</td><td><code>age &lt; 5</code> is checked first and is True, so that branch runs and the rest are skipped — only the first True branch runs.</td></tr>
+    <tr><td>1 · Fares</td><td>What if <code>elif age &gt;= 65</code> came first?</td><td>Same results here — the branches don't overlap. Order only matters when conditions overlap (see Challenge 8).</td></tr>
+    <tr><td>2 · Nested</td><td>Which <code>if</code> does each <code>else</code> belong to?</td><td>The one at the same indent directly above it.</td></tr>
+    <tr><td>3 · Last boat</td><td>Why is <code>left == 0</code> checked first?</td><td>0 is not <code>&gt;= 6</code> either, so it would fall into <code>else</code> and print the wrong message if missing.</td></tr>
+    <tr><td>4 · Route</td><td>What happens without <code>case _</code> and <code>route = "D"</code>?</td><td>Nothing is printed — no error, no output.</td></tr>
+    <tr><td>5 · <code>|</code></td><td>Can you write <code>if day == "Sat" | "Sun":</code>?</td><td>No — in an <code>if</code> write <code>day == "Sat" or day == "Sun"</code>. <code>|</code> belongs in <code>case</code> patterns.</td></tr>
+  </table></div>
+  <h4>Quick-check answers</h4>
+  <ol>
+    <li><code>age = 5</code> → <code>20</code> (5 is not <code>&lt; 5</code>, but is <code>&lt; 18</code>).</li>
+    <li><code>has_ticket = False</code> → <code>Buy a ticket</code> (the inner <code>if</code> never runs).</li>
+    <li><code>route = "b"</code> → <code>Unknown route</code> — matching is case-sensitive.</li>
+  </ol>
+  <div class="box tip"><strong class="lbl">Syllabus note</strong>
+    The <code>|</code> pattern is shown as useful Python 3.10. Check it against the Python 3.10 guide in your syllabus; if you prefer, teach separate <code>case</code> lines and treat Example 5 as enrichment.
+  </div>
+</section>
+
+<!-- CHALLENGE 8 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 8 · Selection: order, nesting and boundaries</h2><span class="marks">10 marks</span></div>
+
+  <h3>8(a) <span class="qm">[3]</span></h3>
+  <div class="tw"><table>
+    <tr><th>score</th><th>95</th><th>80</th><th>30</th></tr>
+    <tr><th>Output</th><td><code>Pass</code></td><td><code>Pass</code></td><td><code>Fail</code></td></tr>
+  </table></div>
+  <ul class="ms"><li>1 mark each. Students who write <code>Distinction</code> for 95 have not traced the code — they've guessed what it <em>should</em> do.</li></ul>
+
+  <h3>8(b) <span class="qm">[2]</span></h3>
+  <p>Any score of 80 or 90+ is also <code>&gt;= 50</code>, so the first branch catches it and the other <code>elif</code>s are never checked. Test the highest boundary first:</p>
+<pre><code>if score &gt;= 90:
+    grade = "Distinction"
+elif score &gt;= 80:
+    grade = "Merit"
+elif score &gt;= 50:
+    grade = "Pass"
+else:
+    grade = "Fail"
+print(grade)</code></pre>
+  <p>Tested: 95 → Distinction · 90 → Distinction · 80 → Merit · 50 → Pass · 49 → Fail.</p>
+  <ul class="ms">
+    <li>1 mark: explains the first True branch stops the checks / overlapping conditions.</li>
+    <li>1 mark: corrected order (or equivalent with <code>and</code> ranges, e.g. <code>score &gt;= 50 and score &lt; 80</code>).</li>
+  </ul>
+
+  <h3>8(c) <span class="qm">[5]</span></h3>
+<pre><code>MAX_WIND = 40
+CHILD_AGE = 12
+wind_speed = 20
+has_ticket = True
+age = 10
+with_adult = False
+
+if wind_speed &gt; MAX_WIND:
+    print("Ferry cancelled")
+else:
+    if not has_ticket:
+        print("Buy a ticket")
+    else:
+        if age &lt; CHILD_AGE and not with_adult:
+            print("Child must travel with an adult")
+        else:
+            print("Board")</code></pre>
+  <div class="tw"><table>
+    <tr><th>wind, ticket, age, adult</th><th>Output</th></tr>
+    <tr><td>45, True, 30, False</td><td><code>Ferry cancelled</code></td></tr>
+    <tr><td>40, False, 30, False</td><td><code>Buy a ticket</code></td></tr>
+    <tr><td>20, True, 10, False</td><td><code>Child must travel with an adult</code></td></tr>
+    <tr><td>20, True, 10, True</td><td><code>Board</code></td></tr>
+    <tr><td>40, True, 30, False <em>(predict)</em></td><td><code>Board</code> — 40 is not above 40</td></tr>
+    <tr><td>20, True, 12, False <em>(predict)</em></td><td><code>Board</code> — 12 is not under 12</td></tr>
+  </table></div>
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>1 mark: wind check with <code>&gt; MAX_WIND</code> (not <code>&gt;=</code>), using the constant.</li>
+    <li>1 mark: at least one correctly nested <code>if</code> inside an <code>else</code> (or inside an <code>if</code>).</li>
+    <li>1 mark: ticket check with <code>not has_ticket</code> or <code>has_ticket == False</code>.</li>
+    <li>1 mark: child rule with <code>&lt; CHILD_AGE and not with_adult</code>.</li>
+    <li>1 mark: exactly one message printed for every test case.</li>
+  </ul>
+  <p>Accept a flatter <code>if</code>/<code>elif</code> version for 4 marks max — the question requires nesting.</p>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Using separate <code>if</code>s, so a cancelled ferry also prints <code>Buy a ticket</code>.</li>
+      <li><code>wind_speed &gt;= 40</code> — the boundary test catches it.</li>
+      <li>Indenting the inner <code>else</code> at the wrong level so it pairs with the outer <code>if</code>.</li>
+      <li>Writing <code>if has_ticket = False:</code>.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension</strong>
+    Add a warning band: wind from 30 to 40 prints <code>Board — rough sea</code> instead of <code>Board</code>. Students must decide where the new <code>elif</code> goes.
+  </div>
+</section>
+
+<!-- CHALLENGE 9 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 9 · <code>match-case</code>: the ticket machine</h2><span class="marks">8 marks</span></div>
+
+  <h3>9(a) <span class="qm">[2]</span></h3>
+  <p><code>choice</code> holds the integer <code>2</code>, but the cases are the strings <code>"1"</code> and <code>"2"</code>. An integer never matches a string, so only <code>case _</code> matches.</p>
+  <p>Fix: <code>case 2:</code> (and <code>case 1:</code>) — or <code>choice = "2"</code>.</p>
+  <ul class="ms">
+    <li>1 mark: integer vs string mismatch explained.</li>
+    <li>1 mark: a valid correction.</li>
+  </ul>
+
+  <h3>9(b) <span class="qm">[6]</span></h3>
+<pre><code># Ticket machine
+SINGLE = 35
+RETURN = 60
+DAY_PASS = 120
+ticket = "R"
+quantity = 5
+
+price = 0
+match ticket:
+    case "S":
+        price = SINGLE
+    case "R":
+        price = RETURN
+    case "D":
+        price = DAY_PASS
+    case _:
+        print("Invalid ticket")
+
+if price &gt; 0:
+    total = price * quantity
+    if quantity &gt;= 5:
+        total = total - total // 10
+    print("Total: " + str(total) + " baht")</code></pre>
+  <div class="tw"><table>
+    <tr><th>ticket, quantity</th><th>Output</th></tr>
+    <tr><td>S, 2</td><td><code>Total: 70 baht</code></td></tr>
+    <tr><td>R, 5</td><td><code>Total: 270 baht</code> (300 − 30)</td></tr>
+    <tr><td>D, 1</td><td><code>Total: 120 baht</code></td></tr>
+    <tr><td>X, 3</td><td><code>Invalid ticket</code></td></tr>
+    <tr><td>R, 4 <em>(predict)</em></td><td><code>Total: 240 baht</code> — no discount, 4 is under 5</td></tr>
+    <tr><td>S, 5 <em>(predict)</em></td><td><code>Total: 158 baht</code> — 175 − <code>175 // 10</code> = 175 − 17</td></tr>
+  </table></div>
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>1 mark: <code>match ticket</code> with the three string cases setting the price from constants.</li>
+    <li>1 mark: <code>case _</code> last, printing <code>Invalid ticket</code>, and no total printed afterwards.</li>
+    <li>1 mark: <code>total = price * quantity</code>.</li>
+    <li>1 mark: discount condition <code>quantity &gt;= 5</code>.</li>
+    <li>1 mark: discount uses <code>total // 10</code>.</li>
+    <li>1 mark: exact output format for all tests (accept <code>print("Total:", total, "baht")</code>).</li>
+  </ul>
+  <p>Accept working out and printing the total inside each <code>case</code>, provided it is correct.</p>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li><code>case S:</code> without quotes — Python reads <code>S</code> as a variable name that captures <em>any</em> value, not the letter S, and stops with a <code>SyntaxError</code> because the cases after it can never be reached.</li>
+      <li>Printing <code>Total: 0 baht</code> after <code>Invalid ticket</code>.</li>
+      <li>Discount as <code>total * 0.9</code> → <code>270.0</code>; the question asked for <code>// 10</code>, whole baht.</li>
+      <li><code>quantity &gt; 5</code> — the 5-ticket test catches it.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension</strong>
+    Accept lower-case codes with <code>case "S" | "s":</code>. Then add a <code>"F"</code> family ticket at 100 baht that never gets the discount — students must change the discount condition to <code>quantity &gt;= 5 and ticket != "F"</code>.
+  </div>
+</section>
+
+<section class="card">
+  <h2>After the lesson</h2>
+  <ul>
+    <li>Note which challenge lost the most marks — that becomes next lesson's warm-up.</li>
+    <li>If 3(c) or line 7 caused trouble, start next lesson with three quick "where do the brackets go?" questions.</li>
+    <li>If 8(a) caused trouble, give students three more <code>if</code>/<code>elif</code> chains with overlapping ranges to trace before writing any new code.</li>
+    <li>Compare students' self-scores with your marking to see whether they can judge their own code.</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>

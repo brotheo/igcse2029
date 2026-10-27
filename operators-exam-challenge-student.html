@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operators &amp; Selection Lab — Student</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --ink:#1d2433; --muted:#5b6475; --line:#dfe3ec;
+    --brand:#5b4bdb; --brand-soft:#ece9ff; --accent:#ff9f1c; --code-bg:#1e2230; --code-ink:#e8ecf4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12141b; --card:#1b1e28; --ink:#e7eaf2; --muted:#9aa3b5; --line:#2c3140;
+      --brand:#8f84ff; --brand-soft:#262246; --code-bg:#0d0f15; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 64px}
+  header.hero{background:linear-gradient(135deg,var(--brand),#8a5cf6);color:#fff;border-radius:18px;padding:28px 24px;margin-bottom:24px}
+  .brand{font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:13px;opacity:.9}
+  .hero h1{margin:6px 0 4px;font-size:30px;line-height:1.2}
+  .hero p{margin:0;opacity:.92}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .pill{background:rgba(255,255,255,.18);padding:6px 12px;border-radius:999px;font-size:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+  h2{margin:0 0 4px;font-size:22px}
+  h3{margin:20px 0 6px;font-size:17px}
+  .sub{color:var(--muted);margin:0 0 12px;font-size:14px}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .marks{background:var(--brand-soft);color:var(--brand);font-weight:700;padding:4px 10px;border-radius:8px;font-size:14px;white-space:nowrap}
+  .qm{float:right;color:var(--brand);font-weight:700;font-size:14px}
+  pre{background:var(--code-bg);color:var(--code-ink);padding:14px 16px;border-radius:10px;overflow-x:auto;font:14px/1.55 Consolas,"Fira Code",monospace;margin:10px 0}
+  code{font-family:Consolas,"Fira Code",monospace;font-size:.92em;background:var(--brand-soft);padding:1px 5px;border-radius:5px}
+  pre code{background:none;padding:0;font-size:inherit}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--brand-soft)}
+  td.blank{min-width:110px}
+  td input[type=text], td input:not([type]){width:100%;border:none;background:transparent;color:var(--ink);font:14px Consolas,monospace;padding:2px}
+  textarea{width:100%;min-height:150px;border:1px dashed var(--brand);border-radius:10px;padding:12px;background:var(--card);color:var(--ink);font:14px/1.55 Consolas,"Fira Code",monospace;resize:vertical;tab-size:4}
+  textarea.short{min-height:80px}
+  .rules{border-left:4px solid var(--accent);background:rgba(255,159,28,.08);padding:12px 16px;border-radius:0 10px 10px 0}
+  .rules ul{margin:6px 0 0;padding-left:20px}
+  table.ref td:first-child{font-size:17px;white-space:nowrap;text-align:center}
+  .ops{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
+  .ops div{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .ops strong{display:block;margin-bottom:4px}
+  ul.check{list-style:none;padding-left:0}
+  ul.check li{padding:6px 0}
+  ul.check input{margin-right:8px;transform:scale(1.15)}
+  .total{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:18px}
+  .total input{width:70px;font-size:18px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  details.hint{margin:10px 0;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
+  details.hint summary{cursor:pointer;font-weight:600;color:var(--brand)}
+  .part{background:linear-gradient(135deg,#1e5fa8,var(--brand));color:#fff;border-radius:14px;padding:18px 20px;margin:32px 0 20px}
+  .part h2{margin:0}
+  .part p{margin:4px 0 0;opacity:.92}
+  .we-out{background:var(--brand-soft);border-radius:10px;padding:8px 14px;font:14px Consolas,monospace;margin:-4px 0 10px}
+  .we-out b{font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:8px}
+  .score td input{width:70px;border:1px solid var(--line);border-radius:6px;padding:3px 6px;background:var(--card);color:var(--ink);font-size:15px}
+  button{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:15px;cursor:pointer}
+  @media print{ body{background:#fff} .noprint{display:none} .card{break-inside:avoid} textarea{border:1px solid #999} }
+  @media (max-width:560px){ .hero h1{font-size:24px} table{font-size:13px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="brand">SparkMind Coding · Exam Challenge</div>
+  <h1>Operators &amp; Selection Challenge Lab</h1>
+  <p>Cambridge IGCSE Computer Science 0265 / 0478 · 2029 syllabus · Python 3.10</p>
+  <div class="meta">
+    <span class="pill">⏱ Part A · 60 min</span>
+    <span class="pill">🔀 Part B · 35 min</span>
+    <span class="pill">40 + 12 + 18 marks</span>
+    <span class="pill">✍️ Write it out first, then run it</span>
+  </div>
+</header>
+
+<section class="card">
+  <h2>Learning objectives</h2>
+  <ul>
+    <li>Predict the exact result of arithmetic, relational and logical expressions — including operator precedence.</li>
+    <li>Choose <code>/</code>, <code>//</code> or <code>%</code> from the wording of a question.</li>
+    <li>Turn a written rule into a Boolean expression using <code>and</code>, <code>or</code>, <code>not</code> and brackets.</li>
+    <li>Find and fix operator mistakes that cost exam marks.</li>
+    <li>Write a complete operator program that prints its lines in the right order.</li>
+    <li><strong>Part B:</strong> use operators inside <code>if</code>/<code>elif</code>/<code>else</code>, nested decisions and <code>match-case</code>.</li>
+  </ul>
+  <div class="rules" style="margin-top:14px">
+    <strong>Exam rules for today</strong>
+    <ul>
+      <li><strong>Part A (Challenges 1–7):</strong> variables, constants, operators and <code>print()</code> only. You do <strong>not</strong> need <code>if</code> — print the Boolean result directly.</li>
+      <li><strong>Part B (Challenges 8–9):</strong> now add <code>if</code>/<code>elif</code>/<code>else</code>, nested decisions and <code>match-case</code>. Still no loops, lists or functions.</li>
+      <li>Four-space indents, double quotes, constants in ALL CAPITALS, comments on their own line.</li>
+      <li>No <code>DECLARE</code>, no arrows, no <code>ENDIF</code>.</li>
+      <li>When a question numbers the outputs, print them in that order — top to bottom.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Operator reference — what each sign means</h2>
+  <p class="sub">Every example uses <code>a = 17</code> and <code>b = 5</code> — 17 people and 5 seats on a boat.</p>
+
+  <h3>Arithmetic operators — they calculate</h3>
+  <div class="tw"><table class="ref">
+    <tr><th>Sign</th><th>Name</th><th>What it does</th><th>Example</th><th>Result</th><th>Use it when the question says…</th></tr>
+    <tr><td><code>+</code></td><td>Addition</td><td>Adds two values</td><td><code>a + b</code></td><td><code>22</code></td><td>"total", "altogether", "add"</td></tr>
+    <tr><td><code>-</code></td><td>Subtraction</td><td>Takes the second value away from the first</td><td><code>a - b</code></td><td><code>12</code></td><td>"difference", "how many more", "change"</td></tr>
+    <tr><td><code>*</code></td><td>Multiplication</td><td>Multiplies two values</td><td><code>a * b</code></td><td><code>85</code></td><td>"each costs…", "times", "per person × people"</td></tr>
+    <tr><td><code>/</code></td><td>Division</td><td>Divides and <strong>keeps the decimal</strong> — the answer is always a float</td><td><code>a / b</code></td><td><code>3.4</code></td><td>"share", "average", "cost per person" — a decimal is allowed</td></tr>
+    <tr><td><code>//</code></td><td>Floor division</td><td>Divides and <strong>keeps only the whole number</strong> of times</td><td><code>a // b</code></td><td><code>3</code></td><td>"how many full / whole boats, boxes, crates"</td></tr>
+    <tr><td><code>%</code></td><td>Modulus (remainder)</td><td>Gives what is <strong>left over</strong> after floor division. Not a percentage!</td><td><code>a % b</code></td><td><code>2</code></td><td>"left over", "remaining", "is it even?" (<code>n % 2 == 0</code>)</td></tr>
+    <tr><td><code>**</code></td><td>Exponent (power)</td><td>Raises the first value to the power of the second</td><td><code>2 ** 3</code></td><td><code>8</code></td><td>"squared", "cubed", "to the power of". Never use <code>^</code></td></tr>
+  </table></div>
+
+  <h3>Relational operators — they compare and give <code>True</code> or <code>False</code></h3>
+  <div class="tw"><table class="ref">
+    <tr><th>Sign</th><th>Name</th><th>Question it asks</th><th>Example</th><th>Result</th><th>Watch out</th></tr>
+    <tr><td><code>==</code></td><td>Equal to</td><td>Are the two values the same?</td><td><code>a == b</code></td><td><code>False</code></td><td>Two equals signs. One <code>=</code> <em>stores</em> a value</td></tr>
+    <tr><td><code>!=</code></td><td>Not equal to</td><td>Are the two values different?</td><td><code>a != b</code></td><td><code>True</code></td><td>Not <code>&lt;&gt;</code> (that is pseudocode)</td></tr>
+    <tr><td><code>&lt;</code></td><td>Less than</td><td>Is the left value smaller?</td><td><code>a &lt; b</code></td><td><code>False</code></td><td>"under 12" means <code>age &lt; 12</code></td></tr>
+    <tr><td><code>&lt;=</code></td><td>Less than or equal to</td><td>Is the left value smaller or the same?</td><td><code>a &lt;= b</code></td><td><code>False</code></td><td>"12 or under", "at most", "no more than"</td></tr>
+    <tr><td><code>&gt;</code></td><td>Greater than</td><td>Is the left value bigger?</td><td><code>a &gt; b</code></td><td><code>True</code></td><td>"over 16" means <code>age &gt; 16</code></td></tr>
+    <tr><td><code>&gt;=</code></td><td>Greater than or equal to</td><td>Is the left value bigger or the same?</td><td><code>a &gt;= b</code></td><td><code>True</code></td><td>"16 or more", "at least", "minimum"</td></tr>
+  </table></div>
+
+  <h3>Logical operators — they combine <code>True</code>/<code>False</code> answers</h3>
+  <div class="tw"><table class="ref">
+    <tr><th>Sign</th><th>Name</th><th>Rule</th><th>Example</th><th>Result</th><th>Watch out</th></tr>
+    <tr><td><code>and</code></td><td>AND</td><td><code>True</code> only when <strong>both</strong> sides are <code>True</code></td><td><code>True and False</code></td><td><code>False</code></td><td>Write the word — never <code>&amp;&amp;</code></td></tr>
+    <tr><td><code>or</code></td><td>OR</td><td><code>True</code> when <strong>at least one</strong> side is <code>True</code></td><td><code>True or False</code></td><td><code>True</code></td><td>Write the word — never <code>||</code></td></tr>
+    <tr><td><code>not</code></td><td>NOT</td><td><strong>Flips</strong> one answer: <code>True</code> ↔ <code>False</code></td><td><code>not True</code></td><td><code>False</code></td><td>Never <code>!</code> on its own</td></tr>
+  </table></div>
+
+  <h3>Order Python works things out (highest first)</h3>
+  <div class="tw"><table class="ref">
+    <tr><th>Order</th><th>Operators</th><th>Example</th></tr>
+    <tr><td>1</td><td><code>( )</code> brackets</td><td><code>(2 + 3) * 4</code> → <code>20</code></td></tr>
+    <tr><td>2</td><td><code>**</code></td><td><code>2 * 3 ** 2</code> → <code>18</code></td></tr>
+    <tr><td>3</td><td><code>*</code> <code>/</code> <code>//</code> <code>%</code> (left to right)</td><td><code>2 + 3 * 4</code> → <code>14</code></td></tr>
+    <tr><td>4</td><td><code>+</code> <code>-</code> (left to right)</td><td><code>10 - 4 - 3</code> → <code>3</code></td></tr>
+    <tr><td>5</td><td><code>==</code> <code>!=</code> <code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td><td><code>2 + 3 == 5</code> → <code>True</code></td></tr>
+    <tr><td>6</td><td><code>not</code></td><td><code>not 5 &gt; 3</code> → <code>False</code></td></tr>
+    <tr><td>7</td><td><code>and</code></td><td><code>True or True and False</code> → <code>True</code></td></tr>
+    <tr><td>8</td><td><code>or</code></td><td>Use brackets when an <code>or</code> must happen first</td></tr>
+  </table></div>
+</section>
+
+<section class="card">
+  <h2>Timing plan</h2>
+  <div class="tw"><table>
+    <tr><th>Time</th><th>Challenge</th><th>Marks</th></tr>
+    <tr><td>0–10 min</td><td>1 · Predict the output (arithmetic &amp; precedence)</td><td>7</td></tr>
+    <tr><td>10–18 min</td><td>2 · Choose the operator</td><td>6</td></tr>
+    <tr><td>18–30 min</td><td>3 · Relational and logical operators</td><td>9</td></tr>
+    <tr><td>30–40 min</td><td>4 · Debug the ferry report</td><td>8</td></tr>
+    <tr><td>40–57 min</td><td>5 · Integrated challenge: the ferry office</td><td>10</td></tr>
+    <tr><td>57–60 min</td><td>Final code review</td><td>—</td></tr>
+    <tr><th colspan="2">Total</th><th>40</th></tr>
+    <tr><td>Extra</td><td>6 · Split a number into digits<br>7 · The change machine</td><td>+12</td></tr>
+    <tr><td>Part B · 0–10</td><td>Worked examples: selection and <code>match-case</code></td><td>—</td></tr>
+    <tr><td>Part B · 10–22</td><td>8 · Selection: order, nesting and boundaries</td><td>10</td></tr>
+    <tr><td>Part B · 22–35</td><td>9 · <code>match-case</code>: the ticket machine</td><td>8</td></tr>
+  </table></div>
+</section>
+
+<div class="part"><h2>Part A · Operators</h2><p>Challenges 1–5 · 60 minutes · 40 marks — operators and <code>print()</code> only</p></div>
+
+<!-- CHALLENGE 1 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 1 · Predict the output</h2><p class="sub">0–10 minutes · do not run the code</p></div>
+    <span class="marks">7 marks</span>
+  </div>
+  <p>Write exactly what Python prints. Watch for decimals — <code>5</code> and <code>5.0</code> are different answers.</p>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Statement</th><th>Output</th></tr>
+    <tr><td>a</td><td><code>print(23 / 4)</code></td><td class="blank"><input></td></tr>
+    <tr><td>b</td><td><code>print(23 // 4)</code></td><td class="blank"><input></td></tr>
+    <tr><td>c</td><td><code>print(23 % 4)</code></td><td class="blank"><input></td></tr>
+    <tr><td>d</td><td><code>print(3 ** 2)</code></td><td class="blank"><input></td></tr>
+    <tr><td>e</td><td><code>print(2 + 3 * 4)</code></td><td class="blank"><input></td></tr>
+    <tr><td>f</td><td><code>print((2 + 3) * 4)</code></td><td class="blank"><input></td></tr>
+    <tr><td>g</td><td><code>print(10 - 4 // 3 ** 2)</code></td><td class="blank"><input></td></tr>
+  </table></div>
+  <p>For <strong>g</strong>, show the order Python works it out:</p>
+  <textarea class="short" placeholder="Step 1: ...&#10;Step 2: ...&#10;Step 3: ..."></textarea>
+</section>
+
+<!-- CHALLENGE 2 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 2 · Choose the operator</h2><p class="sub">10–18 minutes</p></div>
+    <span class="marks">6 marks</span>
+  </div>
+  <p>125 students are going on a school trip. Each minibus has 14 seats. Start your code with:</p>
+<pre><code>SEATS = 14
+students = 125</code></pre>
+  <p>Write <strong>one</strong> Python line for each part that prints the answer. Then write the output.</p>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Question</th><th>Python line</th><th>Output</th></tr>
+    <tr><td>a <span class="qm">[1]</span></td><td>How many minibuses are completely full?</td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td>b <span class="qm">[1]</span></td><td>How many students are left over after the full minibuses?</td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td>c <span class="qm">[2]</span></td><td>How many minibuses must be booked so <em>every</em> student travels? (No <code>if</code> — use operators only.)</td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td>d <span class="qm">[1]</span></td><td>The trip costs 3000 baht in total. How much does each student pay?</td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td>e <span class="qm">[1]</span></td><td>A square picnic mat has sides of 7 m. Print its area using a power.</td><td class="blank"><input></td><td class="blank"><input></td></tr>
+  </table></div>
+  <details class="hint"><summary>Hint for (c)</summary>Adding 1 to the full minibuses works for 125 students — but test your line with 126 students. 126 ÷ 14 is exactly 9, so the answer must be 9, not 10. Try adding something to <code>students</code> <em>before</em> you use <code>//</code>.</details>
+</section>
+
+<!-- CHALLENGE 3 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 3 · Relational and logical operators</h2><p class="sub">18–30 minutes</p></div>
+    <span class="marks">9 marks</span>
+  </div>
+
+  <h3>3(a) Evaluate <span class="qm">[4]</span></h3>
+  <p>Given <code>age = 15</code>, <code>member = False</code> and <code>bags = 3</code>, write <code>True</code> or <code>False</code>.</p>
+  <div class="tw"><table>
+    <tr><th>Expression</th><th>Result</th></tr>
+    <tr><td><code>age &gt;= 12 and bags &lt;= 2</code></td><td class="blank"><input></td></tr>
+    <tr><td><code>age &lt; 12 or not member</code></td><td class="blank"><input></td></tr>
+    <tr><td><code>not (age == 15)</code></td><td class="blank"><input></td></tr>
+    <tr><td><code>bags % 2 == 1 and age != 16</code></td><td class="blank"><input></td></tr>
+  </table></div>
+
+  <h3>3(b) Rule → Boolean expression <span class="qm">[3]</span></h3>
+  <p>Write a Python line that stores the result in the named variable.</p>
+  <div class="tw"><table>
+    <tr><th>Variable</th><th>Rule</th><th>Your line</th></tr>
+    <tr><td><code>child_fare</code></td><td>The passenger's age is under 12.</td><td class="blank"><input></td></tr>
+    <tr><td><code>can_board</code></td><td>The passenger is 16 or older <strong>and</strong> is either a member <strong>or</strong> has a ticket.</td><td class="blank"><input></td></tr>
+    <tr><td><code>is_even</code></td><td>The number <code>n</code> is even.</td><td class="blank"><input></td></tr>
+  </table></div>
+
+  <h3>3(c) The missing brackets <span class="qm">[2]</span></h3>
+  <p>A student wrote the <code>can_board</code> rule like this:</p>
+<pre><code>age = 10
+member = False
+has_ticket = True
+print(age &gt;= 16 and member or has_ticket)</code></pre>
+  <p>State the output. Explain why it does not follow the rule in 3(b), and write the corrected <code>print</code> line.</p>
+  <textarea class="short" placeholder="Output / explanation / corrected line"></textarea>
+  <details class="hint"><summary>Hint</summary>Python works out every <code>and</code> before any <code>or</code> — just as it does <code>*</code> before <code>+</code>. Where would you put brackets?</details>
+</section>
+
+<!-- CHALLENGE 4 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 4 · Debug the ferry report</h2><p class="sub">30–40 minutes</p></div>
+    <span class="marks">8 marks</span>
+  </div>
+  <p>The program should print these five lines, in this order:</p>
+  <ol>
+    <li>the number of <strong>whole</strong> boats filled</li>
+    <li>the number of people left on the quay</li>
+    <li>the total fare paid by everyone</li>
+    <li>the deck area of a 4 m square, using a power</li>
+    <li><code>True</code> only when there is at least one boat <strong>and</strong> nobody is left over</li>
+  </ol>
+<pre><code>1   # Ferry report
+2   SEATS = 5
+3   people = 23
+4   boats = people / SEATS
+5   left = people % SEATS
+6   FARE = 12.5
+7   total = people * FARE
+8   print(left)
+9   print(boats)
+10  print(total)
+11  area = 4 ^ 2
+12  print(area)
+13  can_sail = boats &gt; 0 &amp;&amp; left = 0
+14  print(can_sail)</code></pre>
+
+  <h3>4(a) Find the five errors <span class="qm">[5]</span></h3>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Line(s)</th><th>Error</th><th>Correction</th></tr>
+    <tr><td>1</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>2</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>3</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>4</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>5</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+  </table></div>
+
+  <h3>4(b) Output of the corrected program <span class="qm">[3]</span></h3>
+  <textarea class="short" placeholder="Line 1:&#10;Line 2:&#10;Line 3:&#10;Line 4:&#10;Line 5:"></textarea>
+</section>
+
+<!-- CHALLENGE 5 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 5 · Integrated challenge: the ferry office</h2><p class="sub">40–57 minutes</p></div>
+    <span class="marks">10 marks</span>
+  </div>
+  <p>The ferry office wants one program that reports on the queue and checks one passenger. Write the complete program.</p>
+
+  <h3>Start with these values</h3>
+  <ul>
+    <li>Constants: <code>SEATS = 12</code>, <code>FARE = 35</code> (baht per person), <code>CHARTER = 2000</code> (baht to hire a whole boat), <code>MIN_AGE = 16</code></li>
+    <li>Variables: <code>queue = 50</code>, <code>age = 15</code>, <code>has_ticket = True</code>, <code>with_adult = True</code></li>
+  </ul>
+
+  <h3>Print exactly seven lines, in this order</h3>
+  <ol>
+    <li>the number of full boats</li>
+    <li>the number of people left on the quay after the full boats</li>
+    <li>the number of boats needed so everyone sails (operators only, no <code>if</code>)</li>
+    <li>the total fare for the whole queue</li>
+    <li>the cost per person if the whole queue shares one <code>CHARTER</code> (a decimal is allowed)</li>
+    <li><code>True</code> if the last boat is worth sailing: the leftover group is at least half a boat <strong>or</strong> there is no leftover group</li>
+    <li><code>True</code> if the passenger may board: they have a ticket <strong>and</strong> are at least <code>MIN_AGE</code> <strong>or</strong> travelling with an adult</li>
+  </ol>
+
+  <textarea style="min-height:320px" placeholder="# Ferry office&#10;# Write your complete program here"></textarea>
+  <details class="hint"><summary>Hint for lines 3, 6 and 7</summary>Line 3 is the same idea as Challenge 2(c). Line 6: "at least half" means <code>&gt;=</code>, and half a boat is <code>SEATS / 2</code>. Line 7: the <code>or</code> part must be in brackets.</details>
+
+  <h3>Test cases — change the variables, run again, and tick each one that matches</h3>
+  <div class="tw"><table>
+    <tr><th>queue</th><th>age</th><th>has_ticket</th><th>with_adult</th><th>Expected 7 lines</th><th>✓</th></tr>
+    <tr><td>50</td><td>15</td><td>True</td><td>True</td><td><code>4 · 2 · 5 · 1750 · 40.0 · False · True</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>47</td><td>15</td><td>True</td><td>False</td><td><code>3 · 11 · 4 · 1645 · 42.5531914893617 · True · False</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>36</td><td>17</td><td>False</td><td>False</td><td><code>3 · 0 · 3 · 1260 · 55.55555555555556 · True · False</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>24</td><td>17</td><td>True</td><td>False</td><td><code>2 · 0 · 2 · 840 · 83.33333333333333 · True · True</code></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <p class="sub">The · separates the seven printed lines.</p>
+  <p>Design <strong>one</strong> test of your own where line 6 is exactly on the boundary (leftover is exactly half a boat). Write the value of <code>queue</code> and the expected line 6.</p>
+  <textarea class="short" placeholder="queue = ...   expected line 6: ...   because ..."></textarea>
+</section>
+
+<!-- EXTRA CHALLENGES -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Extra challenges</h2><p class="sub">For fast finishers or homework · 12 extra marks · write it out first, then run it</p></div>
+    <span class="marks">+12 marks</span>
+  </div>
+  <p>Finished early? Try these. They use the same operators, but you have to chain <code>//</code> and <code>%</code> together.</p>
+</section>
+
+<!-- CHALLENGE 6 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 6 · Split a number into digits</h2><p class="sub">Extra · trace table</p></div>
+    <span class="marks">6 marks</span>
+  </div>
+<pre><code>1  number = 4729
+2  thousands = number // 1000
+3  hundreds = number // 100 % 10
+4  tens = number // 10 % 10
+5  units = number % 10
+6  digit_sum = thousands + hundreds + tens + units
+7  print(digit_sum)
+8  print(digit_sum % 3 == 0 and units != 0)</code></pre>
+
+  <h3>6(a) Complete the trace table for <code>number = 4729</code> <span class="qm">[4]</span></h3>
+  <div class="tw"><table>
+    <tr><th>thousands</th><th>hundreds</th><th>tens</th><th>units</th><th>digit_sum</th><th>Output</th></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+  </table></div>
+
+  <h3>6(b) Change line 1 to <code>number = 3150</code> <span class="qm">[1]</span></h3>
+  <p>Write the two output lines.</p>
+  <div class="tw"><table>
+    <tr><th>Line 7 output</th><th>Line 8 output</th></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td></tr>
+  </table></div>
+
+  <h3>6(c) Why <code>// 100 % 10</code>? <span class="qm">[1]</span></h3>
+  <p>Explain why line 3 needs <strong>both</strong> <code>// 100</code> and <code>% 10</code>. What would <code>number // 100</code> on its own give?</p>
+  <textarea class="short" placeholder="Explanation"></textarea>
+  <details class="hint"><summary>Hint</summary>Try it step by step: what is <code>4729 // 100</code>? Then what is that answer <code>% 10</code>?</details>
+</section>
+
+<!-- CHALLENGE 7 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 7 · The change machine</h2><p class="sub">Extra · write a program</p></div>
+    <span class="marks">6 marks</span>
+  </div>
+  <p>A shop gives change using the fewest pieces of money: <strong>50</strong> and <strong>20</strong> baht notes, then <strong>10</strong>, <strong>5</strong> and <strong>1</strong> baht coins. Always use the biggest value first.</p>
+  <p>Start with <code>change = 87</code>. Print exactly six lines, in this order:</p>
+  <ol>
+    <li>number of 50 baht notes</li>
+    <li>number of 20 baht notes</li>
+    <li>number of 10 baht coins</li>
+    <li>number of 5 baht coins</li>
+    <li>number of 1 baht coins</li>
+    <li><code>True</code> if the customer gets at least one coin</li>
+  </ol>
+  <details class="hint"><summary>Hint</summary>After each <code>//</code>, use <code>%</code> to find what is still left to pay out, and store it in a variable such as <code>rest</code>. Use <code>rest</code> — not <code>change</code> — for the next note or coin.</details>
+  <textarea style="min-height:260px" placeholder="# Change machine&#10;change = 87"></textarea>
+
+  <h3>Test cases</h3>
+  <div class="tw"><table>
+    <tr><th>change</th><th>Expected 6 lines</th><th>✓</th></tr>
+    <tr><td>87</td><td><code>1 · 1 · 1 · 1 · 2 · True</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>199</td><td><code>3 · 2 · 0 · 1 · 4 · True</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>50</td><td><code>1 · 0 · 0 · 0 · 0 · False</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>4</td><td><code>0 · 0 · 0 · 0 · 4 · True</code></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <p>Write the expected six lines for <code>change = 60</code>, <strong>before</strong> you run it:</p>
+  <textarea class="short" placeholder="Expected output for 60"></textarea>
+</section>
+
+<div class="part"><h2>Part B · Selection with operators</h2><p>35 minutes · 18 marks — next lesson or homework. Revise <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em> first.</p></div>
+
+<!-- WORKED EXAMPLES -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Worked examples · Selection</h2><p class="sub">Part B · 0–10 minutes · read each one, predict the output, then check</p></div>
+  </div>
+  <p>Selection lets a program choose what to do. The condition after <code>if</code> or <code>elif</code> is a <strong>relational or logical expression</strong> — the operators from Part A.</p>
+
+  <h3>Example 1 · <code>if</code> / <code>elif</code> / <code>else</code>: ferry fares</h3>
+<pre><code># Ferry fare by age
+age = 70
+if age &lt; 5:
+    fare = 0
+elif age &lt; 18:
+    fare = 20
+elif age &gt;= 65:
+    fare = 15
+else:
+    fare = 35
+print(fare)</code></pre>
+  <div class="we-out"><b>Output</b>15</div>
+  <p>Python checks the conditions <strong>from the top</strong> and runs <strong>only the first branch that is <code>True</code></strong>, then skips the rest. <code>else</code> catches everything left — here, ages 18 to 64.</p>
+  <div class="tw"><table>
+    <tr><th>age</th><th>3</th><th>17</th><th>18</th><th>40</th><th>65</th></tr>
+    <tr><th>fare</th><td>0</td><td>20</td><td>35</td><td>35</td><td>15</td></tr>
+  </table></div>
+
+  <h3>Example 2 · Nested decisions: who may board</h3>
+<pre><code># A decision inside a decision
+has_ticket = True
+age = 14
+with_adult = False
+if has_ticket:
+    if age &gt;= 16 or with_adult:
+        print("Board")
+    else:
+        print("Needs an adult")
+else:
+    print("Buy a ticket")</code></pre>
+  <div class="we-out"><b>Output</b>Needs an adult</div>
+  <p>The inner <code>if</code> only runs when the outer condition is <code>True</code>. Each level is indented <strong>four more spaces</strong>. Each <code>else</code> belongs to the <code>if</code> directly above it at the same indent.</p>
+
+  <h3>Example 3 · Operators inside conditions: the last boat</h3>
+<pre><code>SEATS = 12
+queue = 30
+left = queue % SEATS
+if left == 0:
+    print("All boats full")
+elif left &gt;= SEATS / 2:
+    print("Send the last boat")
+else:
+    print("Wait for more people")</code></pre>
+  <div class="we-out"><b>Output</b>Send the last boat</div>
+  <p><code>30 % 12</code> is 6, and <code>6 &gt;= 6.0</code> is <code>True</code>. With <code>queue = 36</code> the output is <code>All boats full</code>; with <code>queue = 40</code> it is <code>Wait for more people</code>.</p>
+
+  <h3>Example 4 · <code>match-case</code>: choosing a route</h3>
+<pre><code>route = "B"
+match route:
+    case "A":
+        print("Koh Samui")
+    case "B":
+        print("Koh Phangan")
+    case "C":
+        print("Koh Tao")
+    case _:
+        print("Unknown route")</code></pre>
+  <div class="we-out"><b>Output</b>Koh Phangan</div>
+  <p><code>match</code> compares one value against each <code>case</code> in turn. <code>case _</code> is the default — like <code>else</code>, it matches anything not matched above, so always put it <strong>last</strong>.</p>
+
+  <h3>Example 5 · One case, several values</h3>
+<pre><code>day = "Sat"
+match day:
+    case "Sat" | "Sun":
+        surcharge = 10
+    case "Mon" | "Tue" | "Wed" | "Thu" | "Fri":
+        surcharge = 0
+    case _:
+        surcharge = -1
+print(surcharge)</code></pre>
+  <div class="we-out"><b>Output</b>10</div>
+  <p>Inside a <code>case</code>, <code>|</code> means "or this value". It is <strong>only</strong> used in <code>case</code> patterns — in an <code>if</code> condition you still write the word <code>or</code>.</p>
+
+  <h3><code>if</code> / <code>elif</code> or <code>match-case</code>?</h3>
+  <div class="tw"><table>
+    <tr><th>Use <code>if</code> / <code>elif</code> / <code>else</code> when…</th><th>Use <code>match-case</code> when…</th></tr>
+    <tr><td>you test <strong>ranges</strong>: <code>age &lt; 18</code>, <code>score &gt;= 50</code></td><td>you compare <strong>one variable</strong> with <strong>exact values</strong>: <code>"A"</code>, <code>"B"</code>, <code>"C"</code></td></tr>
+    <tr><td>you combine different variables with <code>and</code> / <code>or</code></td><td>you are building a <strong>menu</strong> or choosing from codes</td></tr>
+    <tr><td>you need a decision inside a decision (nesting)</td><td>several values lead to the same action (<code>|</code>)</td></tr>
+  </table></div>
+
+  <details class="hint"><summary>Quick check — predict before you open</summary>
+    <ol>
+      <li>In Example 1, what is printed if <code>age = 5</code>?</li>
+      <li>In Example 2, what is printed if <code>has_ticket = False</code> and <code>age = 30</code>?</li>
+      <li>In Example 4, what is printed if <code>route = "b"</code> (lower case)?</li>
+    </ol>
+    <p class="sub">Write your answers, then change the values and run the code to check.</p>
+  </details>
+</section>
+
+<!-- CHALLENGE 8 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 8 · Selection: order, nesting and boundaries</h2><p class="sub">Part B · 10–22 minutes</p></div>
+    <span class="marks">10 marks</span>
+  </div>
+
+  <h3>8(a) Predict the grade <span class="qm">[3]</span></h3>
+<pre><code>if score &gt;= 50:
+    grade = "Pass"
+elif score &gt;= 80:
+    grade = "Merit"
+elif score &gt;= 90:
+    grade = "Distinction"
+else:
+    grade = "Fail"
+print(grade)</code></pre>
+  <div class="tw"><table>
+    <tr><th><code>score</code></th><th>95</th><th>80</th><th>30</th></tr>
+    <tr><th>Output</th><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+  </table></div>
+
+  <h3>8(b) Fix the order <span class="qm">[2]</span></h3>
+  <p>Explain why a score of 95 never gets <code>Distinction</code>. Rewrite the code so every grade can be reached.</p>
+  <textarea class="short" placeholder="Explanation and corrected code"></textarea>
+
+  <h3>8(c) Nested decisions: can the ferry sail? <span class="qm">[5]</span></h3>
+  <p>Start with: <code>MAX_WIND = 40</code>, <code>CHILD_AGE = 12</code>, <code>wind_speed = 20</code>, <code>has_ticket = True</code>, <code>age = 10</code>, <code>with_adult = False</code>.</p>
+  <p>Print <strong>one</strong> message:</p>
+  <ol>
+    <li>If the wind speed is <strong>above</strong> <code>MAX_WIND</code>: <code>Ferry cancelled</code> — check nothing else.</li>
+    <li>Otherwise, if the passenger has no ticket: <code>Buy a ticket</code></li>
+    <li>Otherwise, if the passenger is under <code>CHILD_AGE</code> <strong>and</strong> not with an adult: <code>Child must travel with an adult</code></li>
+    <li>Otherwise: <code>Board</code></li>
+  </ol>
+  <p>Your answer must use at least one <strong>nested</strong> <code>if</code>.</p>
+  <textarea style="min-height:220px" placeholder="# Can the ferry sail?"></textarea>
+  <div class="tw"><table>
+    <tr><th>wind_speed</th><th>has_ticket</th><th>age</th><th>with_adult</th><th>Expected output</th><th>✓</th></tr>
+    <tr><td>45</td><td>True</td><td>30</td><td>False</td><td><code>Ferry cancelled</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>40</td><td>False</td><td>30</td><td>False</td><td><code>Buy a ticket</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>20</td><td>True</td><td>10</td><td>False</td><td><code>Child must travel with an adult</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>20</td><td>True</td><td>10</td><td>True</td><td><code>Board</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>40</td><td>True</td><td>30</td><td>False</td><td class="blank"><input placeholder="you predict"></td><td><input type="checkbox"></td></tr>
+    <tr><td>20</td><td>True</td><td>12</td><td>False</td><td class="blank"><input placeholder="you predict"></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <details class="hint"><summary>Hint</summary>Put the wind check on the outside. Everything else goes inside its <code>else:</code>, indented four more spaces. "Above 40" means <code>&gt;</code>, so a wind speed of exactly 40 is safe.</details>
+</section>
+
+<!-- CHALLENGE 9 -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Challenge 9 · <code>match-case</code>: the ticket machine</h2><p class="sub">Part B · 22–35 minutes</p></div>
+    <span class="marks">8 marks</span>
+  </div>
+
+  <h3>9(a) Why "Invalid"? <span class="qm">[2]</span></h3>
+<pre><code>choice = 2
+match choice:
+    case "1":
+        print("Check in")
+    case "2":
+        print("Check out")
+    case _:
+        print("Invalid")</code></pre>
+  <p>This prints <code>Invalid</code>. Explain why, and give the corrected line.</p>
+  <textarea class="short" placeholder="Explanation / correction"></textarea>
+
+  <h3>9(b) Write the ticket machine <span class="qm">[6]</span></h3>
+  <p>Start with: <code>SINGLE = 35</code>, <code>RETURN = 60</code>, <code>DAY_PASS = 120</code>, <code>ticket = "R"</code>, <code>quantity = 5</code>.</p>
+  <ol>
+    <li>Use <code>match-case</code> on <code>ticket</code>: <code>"S"</code> → <code>SINGLE</code>, <code>"R"</code> → <code>RETURN</code>, <code>"D"</code> → <code>DAY_PASS</code>.</li>
+    <li>Any other ticket: print <code>Invalid ticket</code> and <strong>no total</strong>.</li>
+    <li>Total = price × quantity.</li>
+    <li>If <code>quantity</code> is 5 or more, take off a discount of <code>total // 10</code> baht (10%, rounded down to whole baht).</li>
+    <li>Print in this format: <code>Total: 270 baht</code></li>
+  </ol>
+  <textarea style="min-height:260px" placeholder="# Ticket machine"></textarea>
+  <div class="tw"><table>
+    <tr><th>ticket</th><th>quantity</th><th>Expected output</th><th>✓</th></tr>
+    <tr><td>S</td><td>2</td><td><code>Total: 70 baht</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>R</td><td>5</td><td><code>Total: 270 baht</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>D</td><td>1</td><td><code>Total: 120 baht</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>X</td><td>3</td><td><code>Invalid ticket</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>R</td><td>4</td><td class="blank"><input placeholder="you predict"></td><td><input type="checkbox"></td></tr>
+    <tr><td>S</td><td>5</td><td class="blank"><input placeholder="you predict"></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <details class="hint"><summary>Hint</summary>Set <code>price = 0</code> before the <code>match</code>. After the <code>match</code>, <code>if price &gt; 0:</code> tells you a valid ticket was chosen — only then work out and print the total.</details>
+</section>
+
+<!-- REVIEW -->
+<section class="card">
+  <div class="sec-head">
+    <div><h2>Final code review</h2><p class="sub">57–60 minutes · tick each one you have checked</p></div>
+  </div>
+  <ul class="check">
+    <li><label><input type="checkbox">I used <code>//</code> for "how many whole groups" and <code>%</code> for "how many left over".</label></li>
+    <li><label><input type="checkbox">I used <code>/</code> only where a decimal answer is allowed.</label></li>
+    <li><label><input type="checkbox">I used <code>**</code> for powers — never <code>^</code>.</label></li>
+    <li><label><input type="checkbox">I used <code>==</code> to compare and <code>=</code> only to store.</label></li>
+    <li><label><input type="checkbox">I wrote <code>and</code>, <code>or</code>, <code>not</code> as words, and added brackets where an <code>or</code> must happen first.</label></li>
+    <li><label><input type="checkbox">Constants are in ALL CAPITALS and I used them instead of typing the numbers again.</label></li>
+    <li><label><input type="checkbox">My lines print in the order the question numbers them.</label></li>
+    <li><label><input type="checkbox">Part B: every <code>if</code>, <code>elif</code>, <code>else</code>, <code>match</code> and <code>case</code> line ends with a colon, and its block is indented four spaces.</label></li>
+    <li><label><input type="checkbox">Part B: my <code>if</code>/<code>elif</code> conditions are in an order where every branch can be reached.</label></li>
+    <li><label><input type="checkbox">Part B: <code>case _</code> is the last case.</label></li>
+  </ul>
+  <h3>Self-score</h3>
+  <div class="tw"><table class="score">
+    <tr><th>Part A</th><th>1 /7</th><th>2 /6</th><th>3 /9</th><th>4 /8</th><th>5 /10</th><th>Total /40</th></tr>
+    <tr><td></td><td><input type="number" min="0" max="7" data-g="a"></td><td><input type="number" min="0" max="6" data-g="a"></td><td><input type="number" min="0" max="9" data-g="a"></td><td><input type="number" min="0" max="8" data-g="a"></td><td><input type="number" min="0" max="10" data-g="a"></td><td><strong id="sum-a">0</strong></td></tr>
+    <tr><th>Extra</th><th>6 /6</th><th>7 /6</th><th colspan="3"></th><th>Total /12</th></tr>
+    <tr><td></td><td><input type="number" min="0" max="6" data-g="x"></td><td><input type="number" min="0" max="6" data-g="x"></td><td colspan="3"></td><td><strong id="sum-x">0</strong></td></tr>
+    <tr><th>Part B</th><th>8 /10</th><th>9 /8</th><th colspan="3"></th><th>Total /18</th></tr>
+    <tr><td></td><td><input type="number" min="0" max="10" data-g="b"></td><td><input type="number" min="0" max="8" data-g="b"></td><td colspan="3"></td><td><strong id="sum-b">0</strong></td></tr>
+  </table></div>
+  <p class="noprint" style="margin-top:16px"><button onclick="window.print()">Print / save as PDF</button></p>
+</section>
+
+</div>
+<script>
+  document.querySelectorAll(".score input").forEach(function (box) {
+    box.addEventListener("input", function () {
+      ["a", "x", "b"].forEach(function (g) {
+        var total = 0;
+        document.querySelectorAll('.score input[data-g="' + g + '"]').forEach(function (i) {
+          var v = parseInt(i.value, 10);
+          if (!isNaN(v)) { total += Math.max(0, Math.min(v, parseInt(i.max, 10))); }
+        });
+        document.getElementById("sum-" + g).textContent = total;
+      });
+    });
+  });
+</script>
+</body>
+</html>
