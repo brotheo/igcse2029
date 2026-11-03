@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Operators &amp; Selection Lab — Teacher</title>
+<title>Operators, Selection &amp; Loops Lab — Teacher</title>
 <style>
   :root{
     --bg:#f6f7fb; --card:#ffffff; --ink:#1d2433; --muted:#5b6475; --line:#dfe3ec;
@@ -49,6 +49,18 @@
   .part{background:linear-gradient(135deg,#1e5fa8,#0f7b6c);color:#fff;border-radius:14px;padding:18px 20px;margin:32px 0 20px}
   .part h2{margin:0}
   .part p{margin:4px 0 0;opacity:.92}
+  details.step{border:1px solid var(--line);border-radius:10px;margin:8px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:10px 14px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:center}
+  details.step summary::-webkit-details-marker{display:none}
+  details.step summary::after{content:"+";margin-left:auto;color:var(--brand);font-size:20px;line-height:1}
+  details.step[open] summary::after{content:"–"}
+  details.step[open] summary{border-bottom:1px solid var(--line)}
+  .sn{background:var(--brand);color:#fff;border-radius:6px;padding:1px 8px;font-size:13px;font-weight:700}
+  .sbody{padding:4px 16px 12px}
+  .sbody h3{margin:14px 0 6px}
+  button{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:14px;cursor:pointer;margin-right:6px}
+  button.ghost{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+  @media print{ .noprint{display:none} details.step .sbody{display:block} }
   @media print{ body{background:#fff} .card{break-inside:avoid} }
   @media (max-width:560px){ .hero h1{font-size:24px} table{font-size:13px} }
 </style>
@@ -58,12 +70,13 @@
 
 <header class="hero">
   <div class="brand">SparkMind Coding · Teacher edition</div>
-  <h1>Operators &amp; Selection Challenge Lab — Answers &amp; Mark Scheme</h1>
+  <h1>Operators, Selection &amp; Loops Challenge Lab — Answers &amp; Mark Scheme</h1>
   <p>Cambridge IGCSE Computer Science 0265 / 0478 · 2029 syllabus · Python 3.10</p>
   <div class="meta">
     <span class="pill">⏱ Part A · 60 min</span>
     <span class="pill">🔀 Part B · 35 min</span>
-    <span class="pill">40 + 12 + 18 marks</span>
+    <span class="pill">🔁 Part C · 35 min</span>
+    <span class="pill">40 + 12 + 18 + 21 marks</span>
     <span class="pill">🔒 Do not share with students</span>
   </div>
 </header>
@@ -71,7 +84,7 @@
 <section class="card">
   <h2>Lesson overview</h2>
   <p><strong>Progression:</strong> the operators lesson taught the seven arithmetic operators, the six relational operators and <code>and</code>/<code>or</code>/<code>not</code> through the ferry and bakery examples. This lab is the harder follow-up: no re-teaching, more marks for <em>choosing</em> the right operator, precedence, brackets in logic, and printing lines in the required order.</p>
-  <p><strong>Scope:</strong> <strong>Part A</strong> (Challenges 1–7) uses variables, constants, operators and <code>print()</code> only — Booleans are printed directly. <strong>Part B</strong> (Challenges 8–9) links back to the lessons <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em>, using the operators inside conditions. No loops, lists or functions anywhere. Accept any correct answer in scope.</p>
+  <p><strong>Scope:</strong> <strong>Part A</strong> (Challenges 1–7) uses variables, constants, operators and <code>print()</code> only — Booleans are printed directly. <strong>Part B</strong> (Challenges 8–9) links back to the lessons <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em>, using the operators inside conditions. <strong>Part C</strong> (Challenges 10–12) follows <em>Count-controlled loops: for and range</em> and adds <code>for</code> with <code>range</code> to everything above. No <code>while</code>, lists or functions anywhere. Accept any correct answer in scope.</p>
   <p><strong>New on the student page:</strong> a fold-out hint under the hardest questions (2c, 3c, 5, 6c, 7, 8c, 9b) and a self-score table that adds up automatically. Ask students to note which hints they opened — it shows you where support is still needed.</p>
   <div class="tw"><table>
     <tr><th>Time</th><th>Challenge</th><th>Marks</th><th>Teacher focus</th></tr>
@@ -85,6 +98,11 @@
     <tr><td>B · 0–10</td><td>Worked examples</td><td>—</td><td>Students predict each output <em>before</em> reading it.</td></tr>
     <tr><td>B · 10–22</td><td>8 · Selection</td><td>10</td><td>Unreachable branches and nested indentation.</td></tr>
     <tr><td>B · 22–35</td><td>9 · <code>match-case</code></td><td>8</td><td>String vs integer cases; no total after an invalid ticket.</td></tr>
+    <tr><td>C · 0–5</td><td><code>range</code> warm-up</td><td>—</td><td>Cover the Visits column; students say each one aloud.</td></tr>
+    <tr><td>C · 5–13</td><td>10 · What <code>range</code> visits</td><td>6</td><td>Stop excluded; <code>range(5, 5)</code> runs zero times.</td></tr>
+    <tr><td>C · 13–23</td><td>11 · Trace &amp; debug</td><td>7</td><td>One trace row per pass — no row for the stop value.</td></tr>
+    <tr><td>C · 23–35</td><td>12 · Ferry timetable</td><td>8</td><td>Loop + selection + counter; prints after the loop.</td></tr>
+    <tr><td>Practice</td><td>P1–P7 · Bronze/Silver/Gold</td><td>21 pts</td><td>Homework. Students self-check with the expected outputs on their page.</td></tr>
   </table></div>
   <div class="box tip"><strong class="lbl">Grade guide (out of 40)</strong>
     34+ secure · 26–33 developing well · 18–25 needs targeted practice · below 18 revisit the operators lesson before moving on.
@@ -577,16 +595,601 @@ if price &gt; 0:
   </div>
 </section>
 
+<div class="part"><h2>Part C · Count-controlled loops</h2><p>35 minutes · 21 marks · after the lesson <em>Count-controlled loops: for and range</em> · syllabus 8.1.5(c)</p></div>
+
+<!-- LESSON PLAN: COUNT-CONTROLLED LOOPS -->
+<section class="card" id="lesson-loops">
+  <div class="sec-head">
+    <div><h2>Lesson: Count-controlled loops — <code>for</code> and <code>range</code> (improved)</h2>
+    <p class="sub">15 core steps · syllabus 8.1.5(c) · teach this before Part C</p></div>
+    <span class="marks">Lesson plan</span>
+  </div>
+  <p>The full lesson for this week, with the review fixes applied. Every code block and output has been run in Python 3. Click a step to open it.</p>
+  <p class="noprint"><button type="button" onclick="document.querySelectorAll('#lesson-loops details').forEach(function(d){d.open=true;})">Open all steps</button>
+  <button type="button" class="ghost" onclick="document.querySelectorAll('#lesson-loops details').forEach(function(d){d.open=false;})">Close all</button></p>
+  <details class="step" open>
+    <summary><span class="sn">01</span>Intro — Repeat a count you already know</summary>
+    <div class="sbody">
+<p>A museum prints seat numbers 1 to 5 before the doors open. The count is known <strong>before</strong> the loop starts, so this is a <strong>count-controlled loop</strong>. In Python that is <code>for</code> together with <code>range</code>.</p>
+<pre><code># Print the seat numbers, then open the doors
+for seat in range(1, 6):
+    print(seat)
+print(&quot;Doors open&quot;)
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>1
+2
+3
+4
+5
+Doors open
+</code></pre>
+<p>The loop variable <code>seat</code> takes each value in turn. The indented line runs once for each value. When the values run out, the next unindented line runs, which is why <code>Doors open</code> prints once, at the end.</p>
+<p>Programming answers for exams from 2029 are Python 3.10 or higher. Use four-space indents, double quotes, and ALL CAPITALS for a constant. A comment sits on its own line. Do not write <code>DECLARE</code>, arrows, <code>NEXT</code> or <code>ENDIF</code>.</p>
+<p><strong>By the end you can:</strong></p>
+<ul>
+<li>write <code>for</code> with <code>range(stop)</code>, <code>range(start, stop)</code> and <code>range(start, stop, step)</code></li>
+<li>say exactly which values a <code>range</code> visits, and remember that the stop value is never included</li>
+<li>build a total with a loop and print it once</li>
+</ul>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">02</span>Learn — range stops before the end value</summary>
+    <div class="sbody">
+<div class="tw"><table>
+<thead>
+<tr>
+<th>You write</th>
+<th>Values visited</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>range(5)</code></td>
+<td>0, 1, 2, 3, 4</td>
+<td>Starts at 0. Stops <strong>before</strong> 5.</td>
+</tr>
+<tr>
+<td><code>range(1, 6)</code></td>
+<td>1, 2, 3, 4, 5</td>
+<td>The start is included. The stop is <strong>not</strong>.</td>
+</tr>
+<tr>
+<td><code>range(0, 8, 2)</code></td>
+<td>0, 2, 4, 6</td>
+<td>The third number is the step.</td>
+</tr>
+<tr>
+<td><code>range(5, 5)</code></td>
+<td>nothing</td>
+<td>The start is not before the stop, so the body never runs.</td>
+</tr>
+</tbody>
+</table></div>
+<p>If you want the numbers 1 to 5 <strong>inclusive</strong>, the stop must be <strong>6</strong>, one past the last number you need. Writing <code>range(1, 5)</code> drops the 5. That is the usual lost mark.</p>
+<p><strong>Quick check:</strong> which values does <code>range(3, 7)</code> visit? <em>(3, 4, 5, 6)</em></p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">03</span>Worked example — Numbers 1 to 5, totalled</summary>
+    <div class="sbody">
+<p>The loop adds each count into <code>total</code>. The <code>print</code> is outside the loop, so the total appears once.</p>
+<pre><code># Add the numbers 1 to 5
+total = 0
+for count in range(1, 6):
+    total = total + count
+print(total)
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>15
+</code></pre>
+<p><strong>What this does:</strong> <code>total</code> starts at 0 <strong>before</strong> the loop. <code>range(1, 6)</code> visits 1, 2, 3, 4 and 5, and each pass adds the count: 1 + 2 + 3 + 4 + 5 = 15. The <code>print</code> is at the left edge, so it runs once, after the last pass.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">04</span>Learn — A step skips values</summary>
+    <div class="sbody">
+<p>The step is the third value inside <code>range</code>. It is how much the counter grows after each pass. A step of 2 walks through the even numbers if you start on an even number. The stop is still excluded.</p>
+<p>The step is 1 unless you write a third value, so only write it when the counter should jump.</p>
+<p><strong>Do not add 1 to the counter yourself.</strong> The Cambridge Python guide says the counter is "initialised and incremented by the looping construct": <code>range</code> already moves it. Changing the counter inside the loop does <strong>not</strong> change the next value <code>range</code> gives out.</p>
+<pre><code>for lap in range(1, 4):
+    print(lap)
+    lap = lap + 10
+</code></pre>
+<p>This still prints 1, 2, 3. The extra line does nothing useful, and in an exam it shows you have mixed up <code>for</code> and <code>while</code>.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">05</span>Worked example — Even steps up to but not including 8</summary>
+    <div class="sbody">
+<p>Start at 0, stop before 8, step 2.</p>
+<pre><code># Even numbers below 8
+for step in range(0, 8, 2):
+    print(step)
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>0
+2
+4
+6
+</code></pre>
+<p><strong>What this does:</strong> 0, 2, 4 and 6 print. The next value would be 8, but 8 is the stop, so it is not printed. To include 8, the stop must be 9 or 10.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">06</span>Examiner tip — What a count-controlled answer needs</summary>
+    <div class="sbody">
+<ol>
+<li>A <code>for</code> line that ends with a <strong>colon</strong>, and a body indented <strong>four spaces</strong>.</li>
+<li>An inclusive end in the question means a stop <strong>one past</strong> that end.</li>
+<li>A step in the question goes <strong>third</strong> inside <code>range</code>.</li>
+<li>A total or counter is set to 0 <strong>before</strong> the loop and printed <strong>after</strong> it.</li>
+</ol>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">07</span>Your turn — Find the logic error</summary>
+    <div class="sbody">
+<p>This program should add the numbers <strong>1 to 5 inclusive</strong> and print 15. It prints 10. Find the error before you reveal the fix.</p>
+<pre><code>total = 0
+for count in range(1, 5):
+    total = total + count
+print(total)
+</code></pre>
+<p><strong>Reveal fix:</strong> <code>range(1, 5)</code> visits 1, 2, 3 and 4, so the total is 10. The question asked for 1 to 5 inclusive. <code>range(1, 6)</code> includes 5 and the total is 15.</p>
+<pre><code>for count in range(1, 6):
+</code></pre>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">08</span>Trace table — Trace range(1, 4)</summary>
+    <div class="sbody">
+<pre><code>total = 0
+for count in range(1, 4):
+    total = total + count
+print(total)
+</code></pre>
+<p>One row each time the indented line runs. Show <code>total</code> <strong>after</strong> the line has run.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>count</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Output:</strong> <code>6</code></p>
+<p><code>range(1, 4)</code> visits 1, 2 and 3. 4 is the stop, so it never gets a row. Three visits means three rows.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">09</span>Your turn — Write it out first</summary>
+    <div class="sbody">
+<p>A reading club numbers the chairs 2, 4, 6 and 8.</p>
+<ol>
+<li>Write a <code>for</code> loop that prints those four numbers on their own lines, <strong>using a step</strong>.</li>
+<li>In the same program, add the numbers 1, 2 and 3 into <code>total</code> with a <strong>second</strong> loop, and print <code>total</code> once after that loop.</li>
+</ol>
+<p>Write yours on paper before you open the editor. The editor holds one finished version.</p>
+<p><strong>Show the answer</strong></p>
+<pre><code># Chair numbers
+for chair in range(2, 9, 2):
+    print(chair)
+
+# Total of 1 to 3
+total = 0
+for count in range(1, 4):
+    total = total + count
+print(total)
+</code></pre>
+<p>Also correct: <code>range(2, 10, 2)</code>. Any stop from 9 to 10 includes 8 and excludes 10.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">10</span>Practice — Run the chairs</summary>
+    <div class="sbody">
+<p>Run your program. The output must be:</p>
+<pre><code>2
+4
+6
+8
+6
+</code></pre>
+<p>If you see <code>2 4 6</code> only, your stop is too small. If you see the total printed three times, your <code>print(total)</code> is indented.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">11</span>Learn — Mistakes that lose the mark</summary>
+    <div class="sbody">
+<p><strong>The four range mistakes</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>What happens</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stop equals the last number: <code>range(1, 5)</code> for 1 to 5</td>
+<td>5 is never visited, so the answer is one step short</td>
+<td>Stop one past the end: <code>range(1, 6)</code></td>
+</tr>
+<tr>
+<td><code>total = 0</code> inside the loop</td>
+<td>It resets on every pass, so only the last value survives</td>
+<td>Put it before the <code>for</code> line</td>
+</tr>
+<tr>
+<td><code>print(total)</code> indented</td>
+<td>It prints on every pass</td>
+<td>Put it at the left edge, after the loop</td>
+</tr>
+<tr>
+<td>Adding 1 to the counter inside the loop</td>
+<td>Does nothing to the next value, and shows <code>for</code> and <code>while</code> are mixed up</td>
+<td>Let <code>range</code> move the counter</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Read a loop from the inside out.</strong> First list the values <code>range</code> will actually visit: include the start and exclude the stop. Then say what the indented lines do to each value. Then say which line runs after the loop. Candidates who start from the <code>print</code> and guess often include the stop value and end up one step high.</p>
+<p><strong><code>for</code> or <code>while</code>?</strong> Use <code>for</code> when the number of passes is known before the loop starts. A <code>while</code> loop is for when you stop because a condition becomes false, not because a counter ran out.</p>
+<p><strong>On paper:</strong> end the <code>for</code> line with a colon and indent the body by a clear four-space gap. Name the counter after what it counts, such as <code>lap</code> or <code>chair</code>, unless the question gives you the name.</p>
+<p><strong>Tracing:</strong> write one row per visit, not one row per line of code. The stop value never gets a row. When the question asks for the output, write only the printed lines, in order.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">12</span>Exam practice</summary>
+    <div class="sbody">
+<p><strong>Laps 1 to 4 [3 marks]</strong></p>
+<p>Write a loop that adds the lap numbers 1, 2, 3 and 4 into <code>distance</code>, then prints <code>distance</code> once.</p>
+<p><strong>Show the answer</strong></p>
+<pre><code>distance = 0
+for lap in range(1, 5):
+    distance = distance + lap
+print(distance)
+</code></pre>
+<p>Output: <code>10</code></p>
+<p><strong>Why 10 is missing [3 marks]</strong></p>
+<p>A student writes:</p>
+<pre><code>for seat in range(0, 10, 2):
+    print(seat)
+</code></pre>
+<p>They expect the output to include 10. State the numbers that do print, and state why 10 does not.</p>
+<p><strong>Show the answer:</strong> 0, 2, 4, 6 and 8 print. 10 is the stop value, and <code>range</code> stops <strong>before</strong> the stop, so 10 is never visited. To include 10, the stop must be 11 or 12.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">13</span>Mark scheme (teacher only: students cannot see this)</summary>
+    <div class="sbody">
+<p><strong>6 marks</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Mark</th>
+<th>Point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Laps: <code>distance</code> is set to 0 <strong>before</strong> the loop.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Laps: <code>range</code> includes 4 by stopping at 5, e.g. <code>range(1, 5)</code>.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Laps: <code>distance</code> is printed once, <strong>after</strong> the loop (not indented).</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Stop: the printed values are 0, 2, 4, 6 and 8, with nothing extra.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Stop: 10 is identified as the stop value.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Stop: the reason is that <code>range</code> does not visit the stop value.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Do not award the laps marks for an answer written with <code>DECLARE</code>, arrows or <code>NEXT</code>: the 2029 exam marks the Python.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">14</span>Learn — Before you leave the question</summary>
+    <div class="sbody">
+<p>Check your answer against syllabus point <strong>8.1.5(c)</strong> before you move on:</p>
+<ul>
+<li><strong>Header:</strong> does the <code>for</code> line end with a colon, and is the body indented four spaces?</li>
+<li><strong>Range:</strong> name the values it visits. Does the last one match the question's last number?</li>
+<li><strong>Totals:</strong> is the total set before the loop and printed after it?</li>
+<li><strong>Names and order:</strong> if the question gives a variable name, use it exactly. If it asks for output, write only the printed lines, in the order the program reaches them.</li>
+</ul>
+<p>A value that is right in the middle of the program but wrong on the printed line is still a wrong answer.</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="sn">15</span>Close — You can repeat a known count</summary>
+    <div class="sbody">
+<p>You can write a <code>for</code> loop with <code>range</code>, including a start and a step, and say exactly which values it visits.</p>
+<p><strong>Take to the exam:</strong></p>
+<ul>
+<li>the stop value is not included</li>
+<li>a total is set to 0 before the loop</li>
+<li>the final print is not indented inside the loop</li>
+<li><code>range</code> moves the counter, so don't add 1 yourself</li>
+</ul>
+    </div>
+  </details>
+</section>
+
+<section class="card">
+  <h2>Part C · links to the lesson</h2>
+  <p>Part C uses the rules from the <a href="#lesson-loops">improved lesson above</a>. Each challenge targets at least one:</p>
+  <div class="tw"><table>
+    <tr><th>Lesson rule</th><th>Tested in</th></tr>
+    <tr><td>The stop value is not included</td><td>10(a) ii, iii, v · 10(b) · 11(b) · 12 (<code>LAST_HOUR + 1</code>)</td></tr>
+    <tr><td>A total is set to 0 before the loop</td><td>11(b) line 2 · 12 (<code>ferries = 0</code>)</td></tr>
+    <tr><td>The final print is not indented</td><td>11(b) line 4 · 12 summary lines</td></tr>
+    <tr><td><code>range</code> moves the counter — don't add 1 yourself</td><td>Reference card · review checklist · 11(b) misconceptions</td></tr>
+    <tr><td>One trace row per pass, no row for the stop</td><td>11(a) (the empty fourth row is a deliberate trap)</td></tr>
+  </table></div>
+  <div class="box tip"><strong class="lbl">Syllabus note</strong>
+    The Cambridge Python 3.10 guide describes the count-controlled loop as one where "the counter is initialised and incremented by the looping construct", and shows only positive steps. Negative steps such as <code>range(10, 0, -2)</code> are kept as an extension, not core content.
+  </div>
+</section>
+
+<!-- CHALLENGE 10 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 10 · What does <code>range</code> visit?</h2><span class="marks">6 marks</span></div>
+  <div class="tw"><table>
+    <tr><th>#</th><th><code>for</code> line</th><th>Values visited</th><th>Note</th></tr>
+    <tr><td>i</td><td><code>range(4)</code></td><td><code>0 1 2 3</code></td><td>starts at 0</td></tr>
+    <tr><td>ii</td><td><code>range(3, 8)</code></td><td><code>3 4 5 6 7</code></td><td>8 excluded</td></tr>
+    <tr><td>iii</td><td><code>range(1, 10, 3)</code></td><td><code>1 4 7</code></td><td>next would be 10 — excluded</td></tr>
+    <tr><td>iv</td><td><code>range(5, 5)</code></td><td>none</td><td>start is not before stop — the body never runs</td></tr>
+    <tr><td>v</td><td><code>range(0, 21, 5)</code></td><td><code>0 5 10 15 20</code></td><td>21 makes 20 included</td></tr>
+  </table></div>
+  <p><strong>10(b):</strong> <code>for amount in range(10, 51, 10):</code> — accept any stop from 51 to 60.</p>
+  <h4>Mark scheme</h4>
+  <ul class="ms">
+    <li>(a) 1 mark per row: all values and nothing extra.</li>
+    <li>(b) 1 mark: start 10, a stop that includes 50 and excludes 60, step 10.</li>
+  </ul>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Including the stop: <code>3 4 5 6 7 8</code>, or <code>1 4 7 10</code>.</li>
+      <li>Starting <code>range(4)</code> at 1.</li>
+      <li>(iv) writing <code>5</code> — the loop does not visit the start when start equals stop.</li>
+      <li>(b) <code>range(10, 50, 10)</code> — drops 50, the usual lost mark.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 11 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 11 · Trace and debug a loop</h2><span class="marks">7 marks</span></div>
+  <h3>11(a) <span class="qm">[3]</span></h3>
+  <div class="tw"><table>
+    <tr><th>lap</th><th>total</th></tr>
+    <tr><td>2</td><td>4</td></tr>
+    <tr><td>5</td><td>14</td></tr>
+    <tr><td>8</td><td>30</td></tr>
+  </table></div>
+  <p>Output: <code>30</code> (printed once).</p>
+  <ul class="ms">
+    <li>1 mark: <code>lap</code> column is exactly 2, 5, 8 — <strong>no fourth row</strong>.</li>
+    <li>1 mark: <code>total</code> column 4, 14, 30.</li>
+    <li>1 mark: output <code>30</code> once.</li>
+  </ul>
+
+  <h3>11(b) <span class="qm">[4]</span></h3>
+  <div class="tw"><table>
+    <tr><th>Line</th><th>Error</th><th>Correction</th><th>Type</th></tr>
+    <tr><td>1</td><td>Missing colon</td><td><code>...range(1, 11):</code></td><td>Syntax</td></tr>
+    <tr><td>1</td><td>Stop 10 drops the 10</td><td><code>range(1, 11)</code></td><td>Logic</td></tr>
+    <tr><td>2</td><td><code>total = 0</code> inside the loop resets it every pass</td><td>Move it above the <code>for</code> line</td><td>Logic</td></tr>
+    <tr><td>4</td><td><code>print</code> indented — prints on every pass</td><td>Move it to the left edge</td><td>Logic</td></tr>
+  </table></div>
+<pre><code>total = 0
+for number in range(1, 11):
+    total = total + number
+print(total)</code></pre>
+  <p>Output: <code>55</code></p>
+  <ul class="ms"><li>1 mark per error identified <strong>and</strong> corrected.</li></ul>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li>Adding a fourth trace row for 11 in (a) — the stop never gets a row.</li>
+      <li>Fixing the stop to <code>range(0, 11)</code>: accept — adding 0 does not change the total — but ask why it is untidy.</li>
+      <li>Adding <code>number = number + 1</code> inside the loop. It has no effect on the next value — <code>range</code> already moves the counter — and it shows the student is mixing up <code>for</code> and <code>while</code>. Do not award a mark for it as a "fix".</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CHALLENGE 12 -->
+<section class="card">
+  <div class="sec-head"><h2>Challenge 12 · The ferry timetable</h2><span class="marks">8 marks</span></div>
+  <h3>Model answer</h3>
+<pre><code># Ferry timetable
+FIRST_HOUR = 6
+LAST_HOUR = 18
+GAP = 2
+SEATS = 12
+
+ferries = 0
+for hour in range(FIRST_HOUR, LAST_HOUR + 1, GAP):
+    if hour &lt; 12:
+        label = "Morning"
+    elif hour == 12:
+        label = "Noon"
+    else:
+        label = "Afternoon"
+    print("Ferry at " + str(hour) + ":00 " + label)
+    ferries = ferries + 1
+
+print("Ferries: " + str(ferries))
+print("Seats: " + str(ferries * SEATS))</code></pre>
+  <div class="tw"><table>
+    <tr><th>Constants</th><th>Ferry hours</th><th>Last two lines</th></tr>
+    <tr><td>start values</td><td>6, 8, 10, 12, 14, 16, 18</td><td><code>Ferries: 7</code> · <code>Seats: 84</code></td></tr>
+    <tr><td><code>GAP = 3</code></td><td>6, 9, 12, 15, 18</td><td><code>Ferries: 5</code> · <code>Seats: 60</code></td></tr>
+    <tr><td><code>GAP = 4</code></td><td>6, 10, 14, 18</td><td><code>Ferries: 4</code> · <code>Seats: 48</code></td></tr>
+    <tr><td><code>LAST_HOUR = 17</code> <em>(predict)</em></td><td>6, 8, 10, 12, 14, 16</td><td><code>Ferries: 6</code> · <code>Seats: 72</code></td></tr>
+  </table></div>
+  <h4>Mark scheme</h4>
+  <div class="tw"><table>
+    <tr><th>Criterion</th><th>Marks</th></tr>
+    <tr><td><code>for</code> with <code>range</code> using the constants, stop <code>LAST_HOUR + 1</code>, step <code>GAP</code></td><td>2</td></tr>
+    <tr><td><code>if</code>/<code>elif</code>/<code>else</code> inside the loop with correct boundaries (<code>&lt; 12</code>, <code>== 12</code>)</td><td>2</td></tr>
+    <tr><td>Each ferry line in the exact format</td><td>1</td></tr>
+    <tr><td>Counter set to 0 before the loop and increased by 1 inside it</td><td>1</td></tr>
+    <tr><td><code>Seats</code> uses <code>ferries * SEATS</code></td><td>1</td></tr>
+    <tr><td>Both summary lines printed once, after the loop</td><td>1</td></tr>
+    <tr><th>Total</th><th>8</th></tr>
+  </table></div>
+  <p>Do not give the range marks for <code>range(FIRST_HOUR, LAST_HOUR + GAP, GAP)</code>. It passes these tests, but with <code>LAST_HOUR = 19</code> and <code>GAP = 4</code> it adds a ferry at 22:00. <code>LAST_HOUR + 1</code> gives the correct 6, 10, 14, 18. Accept a counter worked out with operators instead of in the loop: <code>(LAST_HOUR - FIRST_HOUR) // GAP + 1</code>.</p>
+  <div class="box mis"><strong class="lbl">Common misconceptions</strong>
+    <ul>
+      <li><code>range(6, 18, 2)</code> — drops the last ferry; output says <code>Ferries: 6</code>.</li>
+      <li>Typing the numbers instead of the constants, so the <code>GAP = 3</code> test fails.</li>
+      <li><code>ferries = 0</code> inside the loop → <code>Ferries: 1</code>.</li>
+      <li>Summary prints indented → printed seven times.</li>
+      <li><code>elif hour &gt; 12</code> before <code>== 12</code> checked, or <code>hour &lt;= 12</code> → noon labelled Morning.</li>
+    </ul>
+  </div>
+  <div class="box ext"><strong class="lbl">Extension questions</strong>
+    <ul>
+      <li>Count down: print 10, 8, 6, 4, 2 with one <code>for</code> line. (<code>range(10, 0, -2)</code> — a negative step; the stop 0 is still excluded.)</li>
+      <li>Count how many numbers from 1 to 30 are multiples of 3, using <code>%</code> inside the loop. (Answer: 10.)</li>
+      <li>Add a <code>PEAK</code> rule: ferries at 8 and 16 have 20 seats instead of 12. Print the new seat total. (Answer: 100.)</li>
+      <li>Explain in one sentence why a <code>for</code> loop is right here and a <code>while</code> loop is not. (The number of ferries is known before the loop starts.)</li>
+    </ul>
+  </div>
+</section>
+
+<div class="part"><h2>Practice Zone · Loops (student homework)</h2><p>7 challenges · 21 practice points · Bronze 2 · Silver 3 · Gold 4 — answers below; students only see expected outputs</p></div>
+
+<section class="card">
+  <div class="sec-head"><h2>Practice Zone answers</h2><span class="marks">21 pts</span></div>
+  <p>Students self-check against the expected output on their page. Use these model answers for marking or for going over the work in class. Award full points for any in-scope answer that gives the right output and uses the method asked for.</p>
+
+  <h3>P1 · Times-table printer <span class="qm">Bronze · 2</span></h3>
+<pre><code>TABLE = 7
+for number in range(1, 11):
+    print(str(TABLE) + " x " + str(number) + " = " + str(TABLE * number))</code></pre>
+  <p>Test answer: <code>12 x 10 = 120</code>. 1 pt <code>range(1, 11)</code> · 1 pt exact format using <code>TABLE</code>.</p>
+
+  <h3>P2 · Star staircase <span class="qm">Bronze · 2</span></h3>
+<pre><code>STEPS = 5
+for row in range(1, STEPS + 1):
+    print("*" * row)</code></pre>
+  <p>Test answer: 3 lines. 1 pt <code>STEPS + 1</code> as the stop · 1 pt string repetition with the loop variable. Common slip: <code>range(STEPS)</code> starts at 0 and prints an empty first line.</p>
+
+  <h3>P3 · Sum of the even numbers <span class="qm">Silver · 3</span></h3>
+<pre><code># Way 1
+total = 0
+for number in range(2, 51, 2):
+    total = total + number
+print(total)
+
+# Way 2
+total = 0
+for number in range(1, 51):
+    if number % 2 == 0:
+        total = total + number
+print(total)</code></pre>
+  <p>Both print <code>650</code>. Way 1 runs 25 times, Way 2 runs 50 times. 1 pt each way · 1 pt loop counts (25 and 50).</p>
+
+  <h3>P4 · Predict, then trace <span class="qm">Silver · 3</span></h3>
+  <div class="tw"><table>
+    <tr><th>number</th><th><code>number % 3 == 0</code></th><th>count</th></tr>
+    <tr><td>3</td><td>True</td><td>1</td></tr>
+    <tr><td>7</td><td>False</td><td>1</td></tr>
+    <tr><td>11</td><td>False</td><td>1</td></tr>
+    <tr><td>15</td><td>True</td><td>2</td></tr>
+    <tr><td>19</td><td>False</td><td>2</td></tr>
+  </table></div>
+  <p>Output <code>2</code>. 1 pt <code>number</code> column (no sixth row for 23 or 20) · 1 pt Boolean column · 1 pt count column and output.</p>
+
+  <h3>P5 · Ferry announcements <span class="qm">Silver · 3</span></h3>
+<pre><code>for boat in range(1, 16):
+    if boat % 3 == 0 and boat % 5 == 0:
+        print("Check tickets and refuel")
+    elif boat % 3 == 0:
+        print("Check tickets")
+    elif boat % 5 == 0:
+        print("Refuel")
+    else:
+        print(boat)</code></pre>
+  <p>1 pt <code>range(1, 16)</code> · 1 pt both-test first · 1 pt all 15 lines correct. Accept <code>boat % 15 == 0</code> for the first test. Most common error: the <code>and</code> test placed last, so boat 15 prints <code>Check tickets</code>.</p>
+
+  <h3>P6 · Savings that grow <span class="qm">Gold · 4</span></h3>
+<pre><code>START = 1000
+YEARS = 5
+savings = START
+for year in range(1, YEARS + 1):
+    savings = savings + savings // 10
+    print("Year " + str(year) + ": " + str(savings))
+print(savings &gt;= START * 2)</code></pre>
+  <p>Output: 1100, 1210, 1331, 1464, 1610, then <code>False</code>. Stretch answer: <code>YEARS = 8</code> (2142). 1 pt <code>savings = START</code> before the loop · 1 pt <code>// 10</code> growth · 1 pt year lines in format · 1 pt Boolean printed once after the loop.</p>
+
+  <h3>P7 · Powers without ** <span class="qm">Gold · 4</span></h3>
+<pre><code>BASE = 2
+POWER = 10
+result = 1
+for counter in range(POWER):
+    result = result * BASE
+print(result)
+print(result == BASE ** POWER)</code></pre>
+  <p>Outputs: <code>1024 True</code> · <code>81 True</code> · <code>1 True</code>. Why <code>POWER = 0</code> works: <code>range(0)</code> visits nothing, so the loop body never runs and <code>result</code> stays 1 — and any number to the power 0 is 1. 1 pt <code>result = 1</code> · 1 pt <code>range(POWER)</code> · 1 pt multiply each pass · 1 pt explanation.</p>
+
+  <div class="box mis"><strong class="lbl">Patterns to watch across the Practice Zone</strong>
+    <ul>
+      <li>Stop values one short: <code>range(1, 10)</code> in P1, <code>range(STEPS)</code> in P2, <code>range(2, 50, 2)</code> in P3.</li>
+      <li><code>result = 0</code> in P7 — everything stays 0.</li>
+      <li>Totals or Booleans printed inside the loop (P3, P6).</li>
+    </ul>
+  </div>
+</section>
+
 <section class="card">
   <h2>After the lesson</h2>
   <ul>
     <li>Note which challenge lost the most marks — that becomes next lesson's warm-up.</li>
     <li>If 3(c) or line 7 caused trouble, start next lesson with three quick "where do the brackets go?" questions.</li>
     <li>If 8(a) caused trouble, give students three more <code>if</code>/<code>elif</code> chains with overlapping ranges to trace before writing any new code.</li>
+    <li>If Challenge 10 lost marks, start the next lesson with five quick "what does this <code>range</code> visit?" questions before any <code>while</code> loops.</li>
     <li>Compare students' self-scores with your marking to see whether they can judge their own code.</li>
   </ul>
 </section>
 
 </div>
+<script>
+  window.addEventListener("beforeprint", function () {
+    document.querySelectorAll("#lesson-loops details").forEach(function (d) { d.open = true; });
+  });
+</script>
 </body>
 </html>

@@ -3,65 +3,148 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Operators &amp; Selection Lab — Student</title>
+<title>Operators, Selection &amp; Loops Lab — Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f7fb; --card:#ffffff; --ink:#1d2433; --muted:#5b6475; --line:#dfe3ec;
-    --brand:#5b4bdb; --brand-soft:#ece9ff; --accent:#ff9f1c; --code-bg:#1e2230; --code-ink:#e8ecf4;
+    --bg:#f4f5fa; --card:#ffffff; --ink:#1b2130; --muted:#5d6577; --line:#e1e4ee; --field:#f6f7fc;
+    --brand:#5b4bdb; --brand-soft:#eeebff; --accent:#f59e0b;
+    --a:#5b4bdb; --b:#1f6fd1; --c:#0f8a74; --p:#d9730d; --g:#5b4bdb;
+    --code-bg:#161a26; --code-ink:#e6e9f2;
+    --tk-key:#c792ea; --tk-str:#c3e88d; --tk-num:#f78c6c; --tk-com:#8590a8; --tk-fn:#82aaff; --tk-bool:#ffcb6b;
+    --bronze:#b5651d; --silver:#64748b; --gold:#b98900;
+    --shadow:0 1px 2px rgba(20,25,40,.05),0 6px 20px rgba(20,25,40,.06);
   }
   @media (prefers-color-scheme: dark){
-    :root{ --bg:#12141b; --card:#1b1e28; --ink:#e7eaf2; --muted:#9aa3b5; --line:#2c3140;
-      --brand:#8f84ff; --brand-soft:#262246; --code-bg:#0d0f15; }
+    :root{ --bg:#0f1218; --card:#181c26; --ink:#e8ebf3; --muted:#9aa3b6; --line:#2a3040; --field:#1f2431;
+      --brand:#9b90ff; --brand-soft:#262246; --a:#9b90ff; --b:#6aa8ff; --c:#3fd0b0; --p:#ffa24d; --g:#9b90ff;
+      --code-bg:#0b0d13; --bronze:#e08a45; --silver:#a3b1c6; --gold:#f0c040; --shadow:none; }
+    .tier{color:#14161c!important}
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
-  .wrap{max-width:900px;margin:0 auto;padding:24px 16px 64px}
-  header.hero{background:linear-gradient(135deg,var(--brand),#8a5cf6);color:#fff;border-radius:18px;padding:28px 24px;margin-bottom:24px}
-  .brand{font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:13px;opacity:.9}
-  .hero h1{margin:6px 0 4px;font-size:30px;line-height:1.2}
+  html{scroll-behavior:smooth;scroll-padding-top:104px}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 16px 80px}
+  a{color:var(--brand)}
+
+  /* hero */
+  header.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#4338ca 0%,#5b4bdb 45%,#0f8a74 130%);color:#fff;border-radius:22px;padding:32px 28px;margin-bottom:16px;box-shadow:var(--shadow)}
+  header.hero::after{content:"for  if  //  %  ==  and";position:absolute;right:-10px;bottom:-14px;font:700 64px/1 "JetBrains Mono",Consolas,monospace;opacity:.08;white-space:nowrap;pointer-events:none}
+  .brand{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;opacity:.9}
+  .hero h1{margin:8px 0 6px;font-size:32px;line-height:1.15;letter-spacing:-.01em}
   .hero p{margin:0;opacity:.92}
-  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-  .pill{background:rgba(255,255,255,.18);padding:6px 12px;border-radius:999px;font-size:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
-  h2{margin:0 0 4px;font-size:22px}
-  h3{margin:20px 0 6px;font-size:17px}
-  .sub{color:var(--muted);margin:0 0 12px;font-size:14px}
-  .sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-  .marks{background:var(--brand-soft);color:var(--brand);font-weight:700;padding:4px 10px;border-radius:8px;font-size:14px;white-space:nowrap}
-  .qm{float:right;color:var(--brand);font-weight:700;font-size:14px}
-  pre{background:var(--code-bg);color:var(--code-ink);padding:14px 16px;border-radius:10px;overflow-x:auto;font:14px/1.55 Consolas,"Fira Code",monospace;margin:10px 0}
-  code{font-family:Consolas,"Fira Code",monospace;font-size:.92em;background:var(--brand-soft);padding:1px 5px;border-radius:5px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+  .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);padding:5px 12px;border-radius:999px;font-size:13.5px}
+  .hero .save-note{margin-top:14px;font-size:13px;opacity:.85}
+
+  /* sticky nav */
+  nav.topnav{position:sticky;top:0;z-index:50;margin:0 -16px 20px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;align-items:center}
+  .navrow::-webkit-scrollbar{display:none}
+  .navrow a{flex:0 0 auto;text-decoration:none;color:var(--ink);font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+  .navrow a .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .navrow a.active{background:var(--ink);color:var(--card);border-color:var(--ink)}
+  .progress{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:12.5px;color:var(--muted)}
+  .bar{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--c));border-radius:99px;transition:width .3s}
+
+  /* cards */
+  .card{--pc:var(--g);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--pc);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+  .card.pa{--pc:var(--a)} .card.pb{--pc:var(--b)} .card.pc{--pc:var(--c)} .card.pp{--pc:var(--p)}
+  .card.pg{border-left-color:var(--line)}
+  h2{margin:0 0 4px;font-size:21px;line-height:1.3;letter-spacing:-.005em}
+  h3{margin:22px 0 8px;font-size:16.5px}
+  .sub{color:var(--muted);margin:2px 0 12px;font-size:14px}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  h2.ch{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .cnum{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 8px;border-radius:10px;background:var(--pc);color:#fff;font-size:15px;font-weight:800}
+  .marks{background:color-mix(in srgb,var(--pc) 14%,var(--card));color:var(--pc);font-weight:700;padding:5px 12px;border-radius:999px;font-size:13.5px;white-space:nowrap}
+  .qm{float:right;color:var(--pc);font-weight:700;font-size:13.5px;background:color-mix(in srgb,var(--pc) 12%,var(--card));padding:1px 8px;border-radius:6px}
+
+  /* code */
+  pre{background:var(--code-bg);color:var(--code-ink);padding:14px 16px;border-radius:12px;overflow-x:auto;font:14px/1.6 "JetBrains Mono",Consolas,"Fira Code",monospace;margin:10px 0;border:1px solid rgba(255,255,255,.04)}
+  code{font-family:"JetBrains Mono",Consolas,"Fira Code",monospace;font-size:.88em;background:color-mix(in srgb,var(--pc,var(--brand)) 12%,var(--card));padding:1px 6px;border-radius:6px}
   pre code{background:none;padding:0;font-size:inherit}
-  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
-  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-  th{background:var(--brand-soft)}
+  pre .k{color:var(--tk-key)} pre .s{color:var(--tk-str)} pre .n{color:var(--tk-num)} pre .c{color:var(--tk-com);font-style:italic} pre .f{color:var(--tk-fn)} pre .b{color:var(--tk-bool)}
+  pre.out{background:var(--field);color:var(--ink);border:1px dashed var(--line)}
+
+  /* tables + fields */
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tw table{margin:0}
+  th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:middle}
+  tr>*:last-child{border-right:none}
+  tr:last-child>*{border-bottom:none}
+  th{background:color-mix(in srgb,var(--pc,var(--brand)) 10%,var(--card));font-weight:700;font-size:14px}
   td.blank{min-width:110px}
-  td input[type=text], td input:not([type]){width:100%;border:none;background:transparent;color:var(--ink);font:14px Consolas,monospace;padding:2px}
-  textarea{width:100%;min-height:150px;border:1px dashed var(--brand);border-radius:10px;padding:12px;background:var(--card);color:var(--ink);font:14px/1.55 Consolas,"Fira Code",monospace;resize:vertical;tab-size:4}
-  textarea.short{min-height:80px}
-  .rules{border-left:4px solid var(--accent);background:rgba(255,159,28,.08);padding:12px 16px;border-radius:0 10px 10px 0}
+  td code{white-space:nowrap}
+  td input[type=text], td input:not([type]){width:100%;border:none;border-bottom:2px dashed color-mix(in srgb,var(--pc,var(--brand)) 45%,transparent);background:var(--field);color:var(--ink);font:14px "JetBrains Mono",Consolas,monospace;padding:6px 8px;border-radius:6px 6px 0 0}
+  input:focus,textarea:focus{outline:2px solid var(--pc,var(--brand));outline-offset:1px}
+  p > input:not([type]){border:none;border-bottom:2px dashed var(--line);background:var(--field);color:var(--ink);padding:4px 8px;border-radius:6px 6px 0 0;font:14px "JetBrains Mono",Consolas,monospace}
+  textarea{width:100%;min-height:150px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--field);color:var(--ink);font:14px/1.6 "JetBrains Mono",Consolas,"Fira Code",monospace;resize:vertical;tab-size:4}
+  textarea.short{min-height:84px}
+  input[type=checkbox]{accent-color:var(--pc,var(--brand));width:18px;height:18px}
+
+  /* boxes */
+  .rules{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--card));padding:12px 16px;border-radius:0 12px 12px 0}
   .rules ul{margin:6px 0 0;padding-left:20px}
   table.ref td:first-child{font-size:17px;white-space:nowrap;text-align:center}
   .ops{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px}
   .ops div{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
   .ops strong{display:block;margin-bottom:4px}
+  details.hint{margin:12px 0;border:1px solid var(--line);border-radius:12px;padding:0;background:var(--field)}
+  details.hint summary{cursor:pointer;font-weight:600;color:var(--pc,var(--brand));padding:9px 14px;list-style:none}
+  details.hint summary::-webkit-details-marker{display:none}
+  details.hint summary::before{content:"💡 "}
+  details.hint[open]{padding-bottom:10px}
+  details.hint > :not(summary){margin-left:14px;margin-right:14px}
+  details.hint{font-size:15px}
+  details.check summary::before{content:"✅ "}
+  .we-out{background:color-mix(in srgb,var(--pc) 10%,var(--card));border-radius:10px;padding:8px 14px;font:14px "JetBrains Mono",Consolas,monospace;margin:-4px 0 10px;white-space:pre-wrap}
+  .we-out b{font-family:"Inter","Segoe UI",system-ui,sans-serif;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-right:8px}
+
+  /* part banners */
+  .part{--pc:var(--a);display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,var(--pc),color-mix(in srgb,var(--pc) 55%,#111827));color:#fff;border-radius:18px;padding:20px 22px;margin:40px 0 18px;box-shadow:var(--shadow)}
+  .part.part-b{--pc:var(--b)} .part.part-c{--pc:var(--c)} .part.part-p{--pc:var(--p)}
+  .part .pl{flex:0 0 auto;display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.18);font:800 24px/1 "Inter",system-ui,sans-serif}
+  .part h2{margin:0;font-size:22px}
+  .part p{margin:4px 0 0;opacity:.92;font-size:14.5px}
+  .part code{background:rgba(255,255,255,.2);color:#fff}
+
+  /* practice */
+  .tier{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:999px;color:#fff}
+  .tier.bronze{background:var(--bronze)} .tier.silver{background:var(--silver)} .tier.gold{background:var(--gold)}
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+  .tiers div{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--field)}
+  .tiers p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+
+  /* review */
   ul.check{list-style:none;padding-left:0}
-  ul.check li{padding:6px 0}
-  ul.check input{margin-right:8px;transform:scale(1.15)}
-  .total{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:18px}
-  .total input{width:70px;font-size:18px;padding:4px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  details.hint{margin:10px 0;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
-  details.hint summary{cursor:pointer;font-weight:600;color:var(--brand)}
-  .part{background:linear-gradient(135deg,#1e5fa8,var(--brand));color:#fff;border-radius:14px;padding:18px 20px;margin:32px 0 20px}
-  .part h2{margin:0}
-  .part p{margin:4px 0 0;opacity:.92}
-  .we-out{background:var(--brand-soft);border-radius:10px;padding:8px 14px;font:14px Consolas,monospace;margin:-4px 0 10px}
-  .we-out b{font-family:"Segoe UI",system-ui,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:8px}
-  .score td input{width:70px;border:1px solid var(--line);border-radius:6px;padding:3px 6px;background:var(--card);color:var(--ink);font-size:15px}
-  button{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:15px;cursor:pointer}
-  @media print{ body{background:#fff} .noprint{display:none} .card{break-inside:avoid} textarea{border:1px solid #999} }
-  @media (max-width:560px){ .hero h1{font-size:24px} table{font-size:13px} }
+  ul.check li{padding:7px 0;border-bottom:1px dashed var(--line)}
+  ul.check li:last-child{border-bottom:none}
+  ul.check label{display:block;position:relative;padding-left:30px;cursor:pointer}
+  ul.check input{position:absolute;left:0;top:4px;margin:0}
+  .score td input{width:72px;border:1.5px solid var(--line);border-radius:8px;padding:4px 8px;background:var(--field);color:var(--ink);font-size:15px}
+  .score strong{font-size:17px;color:var(--brand)}
+  .grand{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:14px 18px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--c));color:#fff;font-weight:700;font-size:18px}
+  button{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+  button.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line)}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  #toTop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;padding:0;font-size:20px;box-shadow:0 6px 18px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+  #toTop.show{opacity:1;pointer-events:auto}
+
+  @media print{
+    body{background:#fff} nav.topnav,#toTop,.noprint{display:none!important}
+    .card,.part{break-inside:avoid;box-shadow:none} textarea{border:1px solid #999}
+    header.hero::after{display:none}
+  }
+  @media (max-width:560px){
+    .hero h1{font-size:25px} header.hero{padding:24px 20px} header.hero::after{font-size:40px}
+    table{font-size:13.5px} .card{padding:18px 16px} .part{padding:16px} .part .pl{width:42px;height:42px;font-size:20px}
+    .qm{float:none;display:inline-block;margin-left:6px}
+  }
 </style>
 </head>
 <body>
@@ -69,17 +152,32 @@
 
 <header class="hero">
   <div class="brand">SparkMind Coding · Exam Challenge</div>
-  <h1>Operators &amp; Selection Challenge Lab</h1>
+  <h1>Operators, Selection &amp; Loops Challenge Lab</h1>
   <p>Cambridge IGCSE Computer Science 0265 / 0478 · 2029 syllabus · Python 3.10</p>
   <div class="meta">
     <span class="pill">⏱ Part A · 60 min</span>
     <span class="pill">🔀 Part B · 35 min</span>
-    <span class="pill">40 + 12 + 18 marks</span>
-    <span class="pill">✍️ Write it out first, then run it</span>
+    <span class="pill">🔁 Part C · 35 min</span>
+    <span class="pill">★ Practice Zone · 7 challenges</span>
+    <span class="pill">91 marks + 21 practice points</span>
   </div>
+  <p class="save-note">✍️ Write it out first, then run it. Your answers save automatically in this browser.</p>
 </header>
 
-<section class="card">
+<nav class="topnav" aria-label="Sections">
+  <div class="navrow">
+    <a href="#start">Start</a>
+    <a href="#ref">Reference</a>
+    <a href="#part-a"><span class="dot" style="background:var(--a)"></span>Part A</a>
+    <a href="#part-b"><span class="dot" style="background:var(--b)"></span>Part B</a>
+    <a href="#part-c"><span class="dot" style="background:var(--c)"></span>Part C</a>
+    <a href="#practice"><span class="dot" style="background:var(--p)"></span>Practice</a>
+    <a href="#review">Review</a>
+  </div>
+  <div class="progress"><div class="bar"><i id="progBar"></i></div><span id="progTxt">0 answers written</span></div>
+</nav>
+
+<section class="card pg" id="start">
   <h2>Learning objectives</h2>
   <ul>
     <li>Predict the exact result of arithmetic, relational and logical expressions — including operator precedence.</li>
@@ -88,12 +186,14 @@
     <li>Find and fix operator mistakes that cost exam marks.</li>
     <li>Write a complete operator program that prints its lines in the right order.</li>
     <li><strong>Part B:</strong> use operators inside <code>if</code>/<code>elif</code>/<code>else</code>, nested decisions and <code>match-case</code>.</li>
+    <li><strong>Part C:</strong> repeat a known count with <code>for</code> and <code>range</code> — and remember the stop value is not included.</li>
   </ul>
   <div class="rules" style="margin-top:14px">
     <strong>Exam rules for today</strong>
     <ul>
       <li><strong>Part A (Challenges 1–7):</strong> variables, constants, operators and <code>print()</code> only. You do <strong>not</strong> need <code>if</code> — print the Boolean result directly.</li>
-      <li><strong>Part B (Challenges 8–9):</strong> now add <code>if</code>/<code>elif</code>/<code>else</code>, nested decisions and <code>match-case</code>. Still no loops, lists or functions.</li>
+      <li><strong>Part B (Challenges 8–9):</strong> now add <code>if</code>/<code>elif</code>/<code>else</code>, nested decisions and <code>match-case</code>. No loops yet.</li>
+      <li><strong>Part C (Challenges 10–12):</strong> now add <code>for</code> with <code>range</code>. Still no <code>while</code>, lists or functions.</li>
       <li>Four-space indents, double quotes, constants in ALL CAPITALS, comments on their own line.</li>
       <li>No <code>DECLARE</code>, no arrows, no <code>ENDIF</code>.</li>
       <li>When a question numbers the outputs, print them in that order — top to bottom.</li>
@@ -101,7 +201,7 @@
   </div>
 </section>
 
-<section class="card">
+<section class="card pg" id="ref">
   <h2>Operator reference — what each sign means</h2>
   <p class="sub">Every example uses <code>a = 17</code> and <code>b = 5</code> — 17 people and 5 seats on a boat.</p>
 
@@ -150,7 +250,7 @@
   </table></div>
 </section>
 
-<section class="card">
+<section class="card pg">
   <h2>Timing plan</h2>
   <div class="tw"><table>
     <tr><th>Time</th><th>Challenge</th><th>Marks</th></tr>
@@ -165,15 +265,20 @@
     <tr><td>Part B · 0–10</td><td>Worked examples: selection and <code>match-case</code></td><td>—</td></tr>
     <tr><td>Part B · 10–22</td><td>8 · Selection: order, nesting and boundaries</td><td>10</td></tr>
     <tr><td>Part B · 22–35</td><td>9 · <code>match-case</code>: the ticket machine</td><td>8</td></tr>
+    <tr><td>Part C · 0–5</td><td><code>range</code> reference: warm-up</td><td>—</td></tr>
+    <tr><td>Part C · 5–13</td><td>10 · What does <code>range</code> visit?</td><td>6</td></tr>
+    <tr><td>Part C · 13–23</td><td>11 · Trace and debug a loop</td><td>7</td></tr>
+    <tr><td>Part C · 23–35</td><td>12 · The ferry timetable</td><td>8</td></tr>
+    <tr><td>Practice Zone</td><td>P1–P7 · Bronze, Silver and Gold loop challenges (homework)</td><td>21 pts</td></tr>
   </table></div>
 </section>
 
-<div class="part"><h2>Part A · Operators</h2><p>Challenges 1–5 · 60 minutes · 40 marks — operators and <code>print()</code> only</p></div>
+<div class="part part-a" id="part-a"><div class="pl">A</div><div><h2>Part A · Operators</h2><p>Challenges 1–5 · 60 minutes · 40 marks — operators and <code>print()</code> only</p></div></div>
 
 <!-- CHALLENGE 1 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 1 · Predict the output</h2><p class="sub">0–10 minutes · do not run the code</p></div>
+    <div><h2 class="ch"><span class="cnum">1</span><span>Predict the output</span></h2><p class="sub">0–10 minutes · do not run the code</p></div>
     <span class="marks">7 marks</span>
   </div>
   <p>Write exactly what Python prints. Watch for decimals — <code>5</code> and <code>5.0</code> are different answers.</p>
@@ -192,9 +297,9 @@
 </section>
 
 <!-- CHALLENGE 2 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 2 · Choose the operator</h2><p class="sub">10–18 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">2</span><span>Choose the operator</span></h2><p class="sub">10–18 minutes</p></div>
     <span class="marks">6 marks</span>
   </div>
   <p>125 students are going on a school trip. Each minibus has 14 seats. Start your code with:</p>
@@ -213,9 +318,9 @@ students = 125</code></pre>
 </section>
 
 <!-- CHALLENGE 3 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 3 · Relational and logical operators</h2><p class="sub">18–30 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">3</span><span>Relational and logical operators</span></h2><p class="sub">18–30 minutes</p></div>
     <span class="marks">9 marks</span>
   </div>
 
@@ -250,9 +355,9 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
 </section>
 
 <!-- CHALLENGE 4 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 4 · Debug the ferry report</h2><p class="sub">30–40 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">4</span><span>Debug the ferry report</span></h2><p class="sub">30–40 minutes</p></div>
     <span class="marks">8 marks</span>
   </div>
   <p>The program should print these five lines, in this order:</p>
@@ -293,9 +398,9 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
 </section>
 
 <!-- CHALLENGE 5 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 5 · Integrated challenge: the ferry office</h2><p class="sub">40–57 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">5</span><span>Integrated challenge: the ferry office</span></h2><p class="sub">40–57 minutes</p></div>
     <span class="marks">10 marks</span>
   </div>
   <p>The ferry office wants one program that reports on the queue and checks one passenger. Write the complete program.</p>
@@ -334,7 +439,7 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
 </section>
 
 <!-- EXTRA CHALLENGES -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
     <div><h2>Extra challenges</h2><p class="sub">For fast finishers or homework · 12 extra marks · write it out first, then run it</p></div>
     <span class="marks">+12 marks</span>
@@ -343,9 +448,9 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
 </section>
 
 <!-- CHALLENGE 6 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 6 · Split a number into digits</h2><p class="sub">Extra · trace table</p></div>
+    <div><h2 class="ch"><span class="cnum">6</span><span>Split a number into digits</span></h2><p class="sub">Extra · trace table</p></div>
     <span class="marks">6 marks</span>
   </div>
 <pre><code>1  number = 4729
@@ -377,9 +482,9 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
 </section>
 
 <!-- CHALLENGE 7 -->
-<section class="card">
+<section class="card pa">
   <div class="sec-head">
-    <div><h2>Challenge 7 · The change machine</h2><p class="sub">Extra · write a program</p></div>
+    <div><h2 class="ch"><span class="cnum">7</span><span>The change machine</span></h2><p class="sub">Extra · write a program</p></div>
     <span class="marks">6 marks</span>
   </div>
   <p>A shop gives change using the fewest pieces of money: <strong>50</strong> and <strong>20</strong> baht notes, then <strong>10</strong>, <strong>5</strong> and <strong>1</strong> baht coins. Always use the biggest value first.</p>
@@ -407,10 +512,10 @@ print(age &gt;= 16 and member or has_ticket)</code></pre>
   <textarea class="short" placeholder="Expected output for 60"></textarea>
 </section>
 
-<div class="part"><h2>Part B · Selection with operators</h2><p>35 minutes · 18 marks — next lesson or homework. Revise <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em> first.</p></div>
+<div class="part part-b" id="part-b"><div class="pl">B</div><div><h2>Part B · Selection with operators</h2><p>35 minutes · 18 marks — next lesson or homework. Revise <em>Selection: if, elif, else and nested decisions</em> and <em>Selection: match-case</em> first.</p></div></div>
 
 <!-- WORKED EXAMPLES -->
-<section class="card">
+<section class="card pb">
   <div class="sec-head">
     <div><h2>Worked examples · Selection</h2><p class="sub">Part B · 0–10 minutes · read each one, predict the output, then check</p></div>
   </div>
@@ -509,9 +614,9 @@ print(surcharge)</code></pre>
 </section>
 
 <!-- CHALLENGE 8 -->
-<section class="card">
+<section class="card pb">
   <div class="sec-head">
-    <div><h2>Challenge 8 · Selection: order, nesting and boundaries</h2><p class="sub">Part B · 10–22 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">8</span><span>Selection: order, nesting and boundaries</span></h2><p class="sub">Part B · 10–22 minutes</p></div>
     <span class="marks">10 marks</span>
   </div>
 
@@ -558,9 +663,9 @@ print(grade)</code></pre>
 </section>
 
 <!-- CHALLENGE 9 -->
-<section class="card">
+<section class="card pb">
   <div class="sec-head">
-    <div><h2>Challenge 9 · <code>match-case</code>: the ticket machine</h2><p class="sub">Part B · 22–35 minutes</p></div>
+    <div><h2 class="ch"><span class="cnum">9</span><span><code>match-case</code>: the ticket machine</span></h2><p class="sub">Part B · 22–35 minutes</p></div>
     <span class="marks">8 marks</span>
   </div>
 
@@ -598,8 +703,325 @@ match choice:
   <details class="hint"><summary>Hint</summary>Set <code>price = 0</code> before the <code>match</code>. After the <code>match</code>, <code>if price &gt; 0:</code> tells you a valid ticket was chosen — only then work out and print the total.</details>
 </section>
 
+<div class="part part-c" id="part-c"><div class="pl">C</div><div><h2>Part C · Count-controlled loops</h2><p>35 minutes · 21 marks — after the lesson <em>Count-controlled loops: for and range</em> · syllabus 8.1.5(c)</p></div></div>
+
+<!-- RANGE REFERENCE -->
+<section class="card pc">
+  <div class="sec-head">
+    <div><h2><code>range</code> reference</h2><p class="sub">Part C · 0–5 minutes · cover the "Visits" column and say each one aloud</p></div>
+  </div>
+  <p>Use <code>for</code> with <code>range</code> when you know <strong>how many times</strong> to repeat before the loop starts. The loop variable takes each value in turn; the indented lines run once for each value. Use <code>while</code> instead when you stop because a condition becomes false.</p>
+  <div class="tw"><table>
+    <tr><th>Form</th><th>Example</th><th>Visits</th><th>Rule</th></tr>
+    <tr><td><code>range(stop)</code></td><td><code>range(5)</code></td><td><code>0 1 2 3 4</code></td><td>Starts at 0. Stops <strong>before</strong> 5.</td></tr>
+    <tr><td><code>range(start, stop)</code></td><td><code>range(1, 6)</code></td><td><code>1 2 3 4 5</code></td><td>Start included. Stop <strong>not</strong> included.</td></tr>
+    <tr><td><code>range(start, stop, step)</code></td><td><code>range(0, 8, 2)</code></td><td><code>0 2 4 6</code></td><td>The step is how much the counter grows each pass.</td></tr>
+    <tr><td>start = stop</td><td><code>range(5, 5)</code></td><td>nothing</td><td>The start is not before the stop, so the body never runs.</td></tr>
+  </table></div>
+  <p><strong>The pattern for a total:</strong></p>
+<pre><code># Add the numbers 1 to 5
+total = 0
+for count in range(1, 6):
+    total = total + count
+print(total)</code></pre>
+  <div class="we-out"><b>Output</b>15</div>
+  <ul>
+    <li>Want 1 to 5 <strong>inclusive</strong>? The stop is <strong>6</strong> — one past the last number you need.</li>
+    <li><code>total = 0</code> goes <strong>before</strong> the <code>for</code> line.</li>
+    <li>The final <code>print</code> sits at the <strong>left edge</strong>, after the loop — or it prints on every pass.</li>
+    <li>The <code>for</code> line ends with a colon, and the body is indented four spaces.</li>
+    <li><strong>Do not add 1 to the counter yourself.</strong> <code>range</code> already moves it — changing it inside the loop does not change the next value.</li>
+  </ul>
+</section>
+
+<!-- CHALLENGE 10 -->
+<section class="card pc">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">10</span><span>What does <code>range</code> visit?</span></h2><p class="sub">Part C · 5–13 minutes · do not run the code</p></div>
+    <span class="marks">6 marks</span>
+  </div>
+  <h3>10(a) Write every value the loop variable takes <span class="qm">[5]</span></h3>
+  <p>If the loop never runs, write <code>none</code>.</p>
+  <div class="tw"><table>
+    <tr><th>#</th><th><code>for</code> line</th><th>Values visited</th></tr>
+    <tr><td>i</td><td><code>for seat in range(4):</code></td><td class="blank"><input></td></tr>
+    <tr><td>ii</td><td><code>for seat in range(3, 8):</code></td><td class="blank"><input></td></tr>
+    <tr><td>iii</td><td><code>for seat in range(1, 10, 3):</code></td><td class="blank"><input></td></tr>
+    <tr><td>iv</td><td><code>for seat in range(5, 5):</code></td><td class="blank"><input></td></tr>
+    <tr><td>v</td><td><code>for seat in range(0, 21, 5):</code></td><td class="blank"><input></td></tr>
+  </table></div>
+  <h3>10(b) Write the <code>range</code> <span class="qm">[1]</span></h3>
+  <p>A ferry ticket desk counts in tens: 10, 20, 30, 40 and 50. Write the <code>for</code> line.</p>
+  <div class="tw"><table><tr><td class="blank"><input placeholder="for amount in range( ... ):"></td></tr></table></div>
+  <details class="hint"><summary>Hint</summary>Name the start, then the stop (one past the last value), then the step. For (iii), keep adding 3 until the next number would reach 10 or more.</details>
+</section>
+
+<!-- CHALLENGE 11 -->
+<section class="card pc">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">11</span><span>Trace and debug a loop</span></h2><p class="sub">Part C · 13–23 minutes</p></div>
+    <span class="marks">7 marks</span>
+  </div>
+
+  <h3>11(a) Trace table <span class="qm">[3]</span></h3>
+<pre><code>total = 0
+for lap in range(2, 9, 3):
+    total = total + lap * 2
+print(total)</code></pre>
+  <p>One row for <strong>each time the indented line runs</strong>. Show <code>total</code> <em>after</em> the line has run. Then write the output.</p>
+  <div class="tw"><table>
+    <tr><th>lap</th><th>total</th></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input placeholder="(only if needed)"></td><td class="blank"><input></td></tr>
+  </table></div>
+  <p>Output: <input style="width:120px;border:none;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:14px Consolas,monospace"></p>
+
+  <h3>11(b) Find the four errors <span class="qm">[4]</span></h3>
+  <p>This program should add the numbers <strong>1 to 10 inclusive</strong> and print the total <strong>once</strong>.</p>
+<pre><code>1  for number in range(1, 10)
+2      total = 0
+3      total = total + number
+4      print(total)</code></pre>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Line</th><th>Error</th><th>Correction</th></tr>
+    <tr><td>1</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>2</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>3</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+    <tr><td>4</td><td class="blank"><input></td><td><input></td><td><input></td></tr>
+  </table></div>
+  <textarea class="short" placeholder="# Corrected program — and write its output"></textarea>
+  <details class="hint"><summary>Hint</summary>Check four things: the end of the <code>for</code> line, the stop value, where <code>total = 0</code> sits, and how far the <code>print</code> is indented.</details>
+</section>
+
+<!-- CHALLENGE 12 -->
+<section class="card pc">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">12</span><span>The ferry timetable</span></h2><p class="sub">Part C · 23–35 minutes · loops + selection + operators</p></div>
+    <span class="marks">8 marks</span>
+  </div>
+  <p>The first ferry leaves at 6:00 and one leaves every 2 hours until the last ferry at 18:00. Start with these constants:</p>
+<pre><code>FIRST_HOUR = 6
+LAST_HOUR = 18
+GAP = 2
+SEATS = 12</code></pre>
+  <ol>
+    <li>Use <strong>one</strong> <code>for</code> loop with <code>range</code> and the constants. The last ferry at <code>LAST_HOUR</code> must be included.</li>
+    <li>Inside the loop, use <code>if</code>/<code>elif</code>/<code>else</code> to choose a label: before 12 → <code>Morning</code>, exactly 12 → <code>Noon</code>, after 12 → <code>Afternoon</code>.</li>
+    <li>For each ferry print, for example: <code>Ferry at 6:00 Morning</code></li>
+    <li>Count the ferries as the loop runs.</li>
+    <li><strong>After</strong> the loop, print two lines: <code>Ferries: 7</code> and <code>Seats: 84</code> (ferries × <code>SEATS</code>).</li>
+  </ol>
+  <textarea style="min-height:280px" placeholder="# Ferry timetable"></textarea>
+  <h3>Expected output with the starting constants</h3>
+<pre class="out"><code>Ferry at 6:00 Morning
+Ferry at 8:00 Morning
+Ferry at 10:00 Morning
+Ferry at 12:00 Noon
+Ferry at 14:00 Afternoon
+Ferry at 16:00 Afternoon
+Ferry at 18:00 Afternoon
+Ferries: 7
+Seats: 84</code></pre>
+  <h3>Change the constants and test again</h3>
+  <div class="tw"><table>
+    <tr><th>Change</th><th>Last two lines</th><th>✓</th></tr>
+    <tr><td><code>GAP = 3</code></td><td><code>Ferries: 5</code> · <code>Seats: 60</code></td><td><input type="checkbox"></td></tr>
+    <tr><td><code>GAP = 4</code></td><td><code>Ferries: 4</code> · <code>Seats: 48</code></td><td><input type="checkbox"></td></tr>
+    <tr><td><code>LAST_HOUR = 17</code>, <code>GAP = 2</code></td><td class="blank"><input placeholder="you predict"></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <details class="hint"><summary>Hint</summary>The stop must be one past <code>LAST_HOUR</code>, so use <code>LAST_HOUR + 1</code>. Set your counter to 0 <em>before</em> the loop and add 1 inside it. Use <code>str(hour)</code> to join the hour to the text.</details>
+</section>
+
+<div class="part part-p" id="practice"><div class="pl">★</div><div><h2>Practice Zone · Loops</h2><p>7 challenges · 21 practice points · homework or extra practice after Part C — <code>for</code>, <code>range</code>, selection and operators</p></div></div>
+
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2>How the Practice Zone works</h2><p class="sub">Work up from Bronze to Gold. Write it on paper first, then type it, then run it.</p></div>
+  </div>
+  <div class="tiers">
+    <div><span class="tier bronze">Bronze · 2 pts</span><p>One loop, one job. Get the <code>range</code> right.</p></div>
+    <div><span class="tier silver">Silver · 3 pts</span><p>A loop with a total, a counter or an <code>if</code> inside.</p></div>
+    <div><span class="tier gold">Gold · 4 pts</span><p>A loop that builds a result, then a final check after it.</p></div>
+  </div>
+  <p>Each challenge has a <strong>✅ Check your output</strong> box. Only open it <em>after</em> you have run your code. If your output is different, fix your code before you look at the hint.</p>
+</section>
+
+<!-- P1 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P1</span><span>Times-table printer</span></h2><p class="sub"><span class="tier bronze">Bronze</span></p></div>
+    <span class="marks">2 pts</span>
+  </div>
+  <p>Store <code>TABLE = 7</code>. Use a <code>for</code> loop to print the 7 times table from 1 to 10, in exactly this format:</p>
+<pre class="out"><code>7 x 1 = 7
+7 x 2 = 14</code></pre>
+  <textarea placeholder="# Times-table printer&#10;TABLE = 7"></textarea>
+  <p><strong>Test:</strong> change <code>TABLE</code> to <code>12</code>. What is the last line? <input placeholder="last line" style="width:200px"></p>
+  <details class="hint check"><summary>Check your output</summary>
+<pre class="out"><code>7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+7 x 4 = 28
+7 x 5 = 35
+7 x 6 = 42
+7 x 7 = 49
+7 x 8 = 56
+7 x 9 = 63
+7 x 10 = 70</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>1 to 10 inclusive means the stop is 11. Join with <code>+</code> and wrap every number in <code>str()</code>.</details>
+</section>
+
+<!-- P2 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P2</span><span>Star staircase</span></h2><p class="sub"><span class="tier bronze">Bronze</span></p></div>
+    <span class="marks">2 pts</span>
+  </div>
+  <p>Store <code>STEPS = 5</code>. Print a staircase where row 1 has one star and the last row has <code>STEPS</code> stars. Use only <strong>one</strong> loop.</p>
+  <p class="sub">Python can repeat a string with <code>*</code>: <code>"*" * 3</code> gives <code>***</code>.</p>
+  <textarea class="short" placeholder="# Star staircase&#10;STEPS = 5"></textarea>
+  <p><strong>Test:</strong> with <code>STEPS = 3</code>, how many lines print? <input placeholder="lines" style="width:90px"></p>
+  <details class="hint check"><summary>Check your output</summary>
+<pre class="out"><code>*
+**
+***
+****
+*****</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>The loop variable can be the row number. The stop must be one past <code>STEPS</code>, so use <code>STEPS + 1</code>.</details>
+</section>
+
+<!-- P3 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P3</span><span>Sum of the even numbers — two ways</span></h2><p class="sub"><span class="tier silver">Silver</span></p></div>
+    <span class="marks">3 pts</span>
+  </div>
+  <p>Add every even number from 2 to 50 <strong>inclusive</strong> and print the total once. Write it two ways in the same program:</p>
+  <ol>
+    <li><strong>Way 1:</strong> use a <strong>step</strong> in <code>range</code>, so the loop only visits even numbers.</li>
+    <li><strong>Way 2:</strong> use <code>range(1, 51)</code> and an <code>if</code> with <code>%</code> inside the loop to pick out the even numbers.</li>
+  </ol>
+  <textarea placeholder="# Way 1&#10;&#10;# Way 2"></textarea>
+  <p>Which way makes the loop run fewer times? How many times does each loop run? <input placeholder="Way 1: ... Way 2: ..." style="width:100%;max-width:360px"></p>
+  <details class="hint check"><summary>Check your output</summary>
+<pre class="out"><code>650
+650</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>Way 1: <code>range(2, 51, 2)</code> — or any stop that includes 50. Way 2: a number is even when <code>number % 2 == 0</code>. Set each total to 0 before its own loop.</details>
+</section>
+
+<!-- P4 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P4</span><span>Predict, then trace</span></h2><p class="sub"><span class="tier silver">Silver</span> · do not run it until the table is full</p></div>
+    <span class="marks">3 pts</span>
+  </div>
+<pre><code>count = 0
+for number in range(3, 20, 4):
+    if number % 3 == 0:
+        count = count + 1
+print(count)</code></pre>
+  <p>Complete one row per pass. Leave rows empty if the loop does not need them.</p>
+  <table>
+    <tr><th>number</th><th><code>number % 3 == 0</code></th><th>count</th></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+    <tr><td class="blank"><input placeholder="(only if needed)"></td><td class="blank"><input></td><td class="blank"><input></td></tr>
+  </table>
+  <p>Output: <input style="width:120px"></p>
+  <details class="hint check"><summary>Check your output</summary>
+    <p>Run the code. The output is a single number. If it doesn't match your table, find the row where you went wrong.</p>
+<pre class="out"><code>2</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>Start at 3 and keep adding 4 while the value is less than 20. The stop value 20 never gets a row.</details>
+</section>
+
+<!-- P5 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P5</span><span>Ferry announcements</span></h2><p class="sub"><span class="tier silver">Silver</span> · loop + selection + <code>%</code></p></div>
+    <span class="marks">3 pts</span>
+  </div>
+  <p>The port numbers the boats 1 to 15. For each boat, print <strong>one</strong> line:</p>
+  <ul>
+    <li>a multiple of 3 <strong>and</strong> of 5 → <code>Check tickets and refuel</code></li>
+    <li>a multiple of 3 → <code>Check tickets</code></li>
+    <li>a multiple of 5 → <code>Refuel</code></li>
+    <li>anything else → just the boat number</li>
+  </ul>
+  <textarea placeholder="# Ferry announcements"></textarea>
+  <details class="hint check"><summary>Check your output</summary>
+<pre class="out"><code>1
+2
+Check tickets
+4
+Refuel
+Check tickets
+7
+8
+Check tickets
+Refuel
+11
+Check tickets
+13
+14
+Check tickets and refuel</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>The order of your <code>if</code>/<code>elif</code> matters — just like the grade question in Challenge 8. Which test must come first so boat 15 is not caught by "multiple of 3"?</details>
+</section>
+
+<!-- P6 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P6</span><span>Savings that grow</span></h2><p class="sub"><span class="tier gold">Gold</span></p></div>
+    <span class="marks">4 pts</span>
+  </div>
+  <p>A student saves <code>START = 1000</code> baht. Each year the bank adds 10% interest, rounded down to whole baht (<code>savings // 10</code>). Store <code>YEARS = 5</code>.</p>
+  <ol>
+    <li>Inside the loop, print one line per year: <code>Year 1: 1100</code></li>
+    <li><strong>After</strong> the loop, print <code>True</code> if the savings are at least double <code>START</code>, otherwise <code>False</code>.</li>
+  </ol>
+  <textarea placeholder="# Savings that grow&#10;START = 1000&#10;YEARS = 5"></textarea>
+  <p><strong>Stretch:</strong> change <code>YEARS</code> until the last line prints <code>True</code>. What is the smallest value that works? <input placeholder="YEARS =" style="width:110px"></p>
+  <details class="hint check"><summary>Check your output</summary>
+<pre class="out"><code>Year 1: 1100
+Year 2: 1210
+Year 3: 1331
+Year 4: 1464
+Year 5: 1610
+False</code></pre>
+  </details>
+  <details class="hint"><summary>Hint</summary>Make a variable <code>savings = START</code> before the loop. Each pass: <code>savings = savings + savings // 10</code>. The final check is a Boolean: <code>savings &gt;= START * 2</code>.</details>
+</section>
+
+<!-- P7 -->
+<section class="card pp">
+  <div class="sec-head">
+    <div><h2 class="ch"><span class="cnum">P7</span><span>Powers without <code>**</code></span></h2><p class="sub"><span class="tier gold">Gold</span></p></div>
+    <span class="marks">4 pts</span>
+  </div>
+  <p>Store <code>BASE = 2</code> and <code>POWER = 10</code>. Use a loop and <code>*</code> only — <strong>no <code>**</code></strong> — to work out <code>BASE</code> to the power <code>POWER</code>. Print the result. Then print <code>True</code> if your answer matches <code>BASE ** POWER</code>.</p>
+  <textarea placeholder="# Powers without **&#10;BASE = 2&#10;POWER = 10"></textarea>
+  <div class="tw"><table>
+    <tr><th>BASE</th><th>POWER</th><th>Expected</th><th>✓</th></tr>
+    <tr><td>2</td><td>10</td><td><code>1024</code> · <code>True</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>3</td><td>4</td><td><code>81</code> · <code>True</code></td><td><input type="checkbox"></td></tr>
+    <tr><td>5</td><td>0</td><td><code>1</code> · <code>True</code></td><td><input type="checkbox"></td></tr>
+  </table></div>
+  <p>Explain why <code>POWER = 0</code> still gives the right answer:</p>
+  <textarea class="short" placeholder="Think about how many times the loop runs..."></textarea>
+  <details class="hint"><summary>Hint</summary>Start with <code>result = 1</code>, not 0 — anything times 0 is 0. <code>range(POWER)</code> runs the loop exactly <code>POWER</code> times.</details>
+</section>
+
 <!-- REVIEW -->
-<section class="card">
+<section class="card pg" id="review">
   <div class="sec-head">
     <div><h2>Final code review</h2><p class="sub">57–60 minutes · tick each one you have checked</p></div>
   </div>
@@ -614,6 +1036,12 @@ match choice:
     <li><label><input type="checkbox">Part B: every <code>if</code>, <code>elif</code>, <code>else</code>, <code>match</code> and <code>case</code> line ends with a colon, and its block is indented four spaces.</label></li>
     <li><label><input type="checkbox">Part B: my <code>if</code>/<code>elif</code> conditions are in an order where every branch can be reached.</label></li>
     <li><label><input type="checkbox">Part B: <code>case _</code> is the last case.</label></li>
+    <li><label><input type="checkbox">Part C: my stop value is one past the last number I need.</label></li>
+    <li><label><input type="checkbox">Part C: totals and counters are set to 0 <strong>before</strong> the <code>for</code> line.</label></li>
+    <li><label><input type="checkbox">Part C: the final <code>print</code> is at the left edge, after the loop.</label></li>
+    <li><label><input type="checkbox">Part C: I did not add 1 to the counter inside a <code>for</code> loop — <code>range</code> does that.</label></li>
+    <li><label><input type="checkbox">Part C: my trace table has one row per pass, and no row for the stop value.</label></li>
+    <li><label><input type="checkbox">Practice: I ran every program and compared it with the ✅ output <em>before</em> opening a hint.</label></li>
   </ul>
   <h3>Self-score</h3>
   <div class="tw"><table class="score">
@@ -623,24 +1051,144 @@ match choice:
     <tr><td></td><td><input type="number" min="0" max="6" data-g="x"></td><td><input type="number" min="0" max="6" data-g="x"></td><td colspan="3"></td><td><strong id="sum-x">0</strong></td></tr>
     <tr><th>Part B</th><th>8 /10</th><th>9 /8</th><th colspan="3"></th><th>Total /18</th></tr>
     <tr><td></td><td><input type="number" min="0" max="10" data-g="b"></td><td><input type="number" min="0" max="8" data-g="b"></td><td colspan="3"></td><td><strong id="sum-b">0</strong></td></tr>
+    <tr><th>Part C</th><th>10 /6</th><th>11 /7</th><th>12 /8</th><th colspan="2"></th><th>Total /21</th></tr>
+    <tr><td></td><td><input type="number" min="0" max="6" data-g="c"></td><td><input type="number" min="0" max="7" data-g="c"></td><td><input type="number" min="0" max="8" data-g="c"></td><td colspan="2"></td><td><strong id="sum-c">0</strong></td></tr>
+    <tr><th>Practice</th><th>P1 /2</th><th>P2 /2</th><th>P3 /3</th><th>P4 /3</th><th>P5 /3</th><th>Total /21</th></tr>
+    <tr><td></td><td><input type="number" min="0" max="2" data-g="p"></td><td><input type="number" min="0" max="2" data-g="p"></td><td><input type="number" min="0" max="3" data-g="p"></td><td><input type="number" min="0" max="3" data-g="p"></td><td><input type="number" min="0" max="3" data-g="p"></td><td><strong id="sum-p">0</strong></td></tr>
+    <tr><th></th><th>P6 /4</th><th>P7 /4</th><th colspan="4"></th></tr>
+    <tr><td></td><td><input type="number" min="0" max="4" data-g="p"></td><td><input type="number" min="0" max="4" data-g="p"></td><td colspan="4"></td></tr>
   </table></div>
-  <p class="noprint" style="margin-top:16px"><button onclick="window.print()">Print / save as PDF</button></p>
+  <div class="grand"><span>Grand total</span><span><span id="sum-all">0</span> / 112</span></div>
+  <div class="actions noprint">
+    <button type="button" onclick="window.print()">Print / save as PDF</button>
+    <button type="button" class="ghost" id="clearAll">Clear my answers</button>
+  </div>
 </section>
 
 </div>
+<button type="button" id="toTop" aria-label="Back to top">↑</button>
 <script>
-  document.querySelectorAll(".score input").forEach(function (box) {
-    box.addEventListener("input", function () {
-      ["a", "x", "b"].forEach(function (g) {
-        var total = 0;
-        document.querySelectorAll('.score input[data-g="' + g + '"]').forEach(function (i) {
-          var v = parseInt(i.value, 10);
-          if (!isNaN(v)) { total += Math.max(0, Math.min(v, parseInt(i.max, 10))); }
-        });
-        document.getElementById("sum-" + g).textContent = total;
+(function () {
+  var KEY = "sparkmind-ops-sel-loops-v1";
+
+  /* ---- Python syntax colouring ---- */
+  var KW = "and|or|not|if|elif|else|for|in|while|match|case|break|def|return|import|from|as|is|pass";
+  var FN = "print|input|int|float|str|range|len|round";
+  var re = new RegExp("(#[^\\n]*)|(\"(?:[^\"\\\\\\n]|\\\\.)*\"|'(?:[^'\\\\\\n]|\\\\.)*')|\\b(" + KW + ")\\b|\\b(" + FN + ")\\b|\\b(True|False|None)\\b|\\b(\\d+(?:\\.\\d+)?)\\b", "g");
+  function esc(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  document.querySelectorAll("pre:not(.out) > code").forEach(function (code) {
+    var src = code.textContent, out = "", last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var cls = m[1] ? "c" : m[2] ? "s" : m[3] ? "k" : m[4] ? "f" : m[5] ? "b" : "n";
+      out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
+      last = re.lastIndex;
+    }
+    code.innerHTML = out + esc(src.slice(last));
+  });
+
+  /* ---- self-score ---- */
+  var groups = ["a", "x", "b", "c", "p"];
+  function sumScores() {
+    var grand = 0;
+    groups.forEach(function (g) {
+      var total = 0;
+      document.querySelectorAll('.score input[data-g="' + g + '"]').forEach(function (i) {
+        var v = parseInt(i.value, 10);
+        if (!isNaN(v)) { total += Math.max(0, Math.min(v, parseInt(i.max, 10))); }
       });
+      var el = document.getElementById("sum-" + g);
+      if (el) { el.textContent = total; }
+      grand += total;
+    });
+    var gEl = document.getElementById("sum-all");
+    if (gEl) { gEl.textContent = grand; }
+  }
+
+  /* ---- auto-save answers in this browser ---- */
+  var fields = Array.prototype.slice.call(document.querySelectorAll(".wrap input, .wrap textarea"));
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+  fields.forEach(function (f, i) {
+    if (saved[i] !== undefined) {
+      if (f.type === "checkbox") { f.checked = !!saved[i]; } else { f.value = saved[i]; }
+    }
+  });
+  function save() {
+    var data = {};
+    fields.forEach(function (f, i) {
+      if (f.type === "checkbox") { if (f.checked) { data[i] = true; } }
+      else if (f.value !== "") { data[i] = f.value; }
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+  }
+
+  /* ---- progress ---- */
+  var answerFields = fields.filter(function (f) { return f.type !== "checkbox" && f.type !== "number"; });
+  function progress() {
+    var done = answerFields.filter(function (f) { return f.value.trim() !== ""; }).length;
+    var pct = answerFields.length ? Math.round(done * 100 / answerFields.length) : 0;
+    var bar = document.getElementById("progBar"), txt = document.getElementById("progTxt");
+    if (bar) { bar.style.width = pct + "%"; }
+    if (txt) { txt.textContent = done + " of " + answerFields.length + " answers written · " + pct + "%"; }
+  }
+
+  document.addEventListener("input", function (e) {
+    if (e.target.closest && e.target.closest(".score")) { sumScores(); }
+    save(); progress();
+  });
+  document.addEventListener("change", function () { save(); progress(); });
+
+  /* ---- Tab inserts four spaces in code boxes ---- */
+  document.querySelectorAll("textarea").forEach(function (t) {
+    t.addEventListener("keydown", function (e) {
+      if (e.key === "Tab" && !e.shiftKey) {
+        e.preventDefault();
+        var s = t.selectionStart, en = t.selectionEnd;
+        t.value = t.value.slice(0, s) + "    " + t.value.slice(en);
+        t.selectionStart = t.selectionEnd = s + 4;
+        save(); progress();
+      }
     });
   });
+
+  /* ---- clear answers ---- */
+  var clearBtn = document.getElementById("clearAll");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () {
+      if (clearBtn.dataset.armed !== "1") {
+        clearBtn.dataset.armed = "1";
+        clearBtn.textContent = "Click again to delete all answers";
+        setTimeout(function () { clearBtn.dataset.armed = ""; clearBtn.textContent = "Clear my answers"; }, 4000);
+        return;
+      }
+      fields.forEach(function (f) { if (f.type === "checkbox") { f.checked = false; } else { f.value = ""; } });
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      clearBtn.dataset.armed = ""; clearBtn.textContent = "Clear my answers";
+      sumScores(); progress();
+    });
+  }
+
+  /* ---- nav highlight + back to top ---- */
+  var links = Array.prototype.slice.call(document.querySelectorAll(".navrow a"));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  var toTop = document.getElementById("toTop");
+  function onScroll() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.offsetTop <= y) { idx = i; } });
+    links.forEach(function (a, i) { a.classList.toggle("active", i === idx); });
+    if (toTop) { toTop.classList.toggle("show", window.scrollY > 900); }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  if (toTop) { toTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); }); }
+
+  window.addEventListener("beforeprint", function () {
+    document.querySelectorAll("details.hint").forEach(function (d) { d.open = false; });
+  });
+
+  sumScores(); progress(); onScroll();
+})();
 </script>
 </body>
 </html>
